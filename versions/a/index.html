@@ -44,7 +44,7 @@
   </style>
 </helmet>
 <div style="min-height:100vh;background:var(--color-bg)">
-  <div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:inline-flex;border:1px solid var(--color-ink);background:var(--color-bg)">
+  <div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:flex;gap:2px;padding:2px;border:1px solid var(--color-border);border-radius:var(--radius-pill);background:var(--color-bg)">
     <button onClick="{{ goHome }}" style="{{ navHomeStyle }}">Home</button>
     <button onClick="{{ goBooking }}" style="{{ navStudentStyle }}">Student</button>
     <button onClick="{{ goLogin }}" style="{{ navLoginStyle }}">Teacher Login</button>
@@ -577,6 +577,9 @@ class Component extends DCLogic {
 
   renderVals() {
     const v = this.state.view;
+    const navBtn = (on) => ({ fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11px', letterSpacing:'1px',
+      textTransform:'uppercase', padding:'6px 12px', border:'none', borderRadius:'var(--radius-pill)', cursor:'pointer',
+      background: on ? 'var(--color-ink)' : 'transparent', color: on ? 'var(--color-bg)' : 'var(--color-gray)' });
     const seg = (on) => ({ fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'1px',
       textTransform:'uppercase', padding:'9px 16px', border:'none', cursor:'pointer',
       background: on ? 'var(--color-ink)' : 'transparent', color: on ? 'var(--color-bg)' : 'var(--color-ink)' });
@@ -604,11 +607,11 @@ class Component extends DCLogic {
       goBooking: this.goBooking,
       goHome: () => this.setState({ page: 'home' }),
       isHome: this.state.page === 'home',
-      navHomeStyle: Object.assign(seg(this.state.page === 'home'), { padding: '8px 12px', fontSize: '11px' }),
+      navHomeStyle: navBtn(this.state.page === 'home'),
       goDashboard: () => this.setState({ page: 'dashboard' }),
-      navStudentStyle: Object.assign(seg(this.state.page === 'booking'), { padding: '8px 12px', fontSize: '11px' }),
-      navLoginStyle: Object.assign(seg(this.state.page === 'login'), { padding: '8px 12px', fontSize: '11px' }),
-      navDashStyle: Object.assign(seg(this.state.page === 'dashboard'), { padding: '8px 12px', fontSize: '11px' }),
+      navStudentStyle: navBtn(this.state.page === 'booking'),
+      navLoginStyle: navBtn(this.state.page === 'login'),
+      navDashStyle: navBtn(this.state.page === 'dashboard'),
       loginPage: this.state.page === 'login' ? this.renderLoginPage() : null,
       dashboardPage: this.state.page === 'dashboard' ? this.renderDashboardPage() : null,
       goToday: () => this.setState({ anchor: this.todayMid() }),
