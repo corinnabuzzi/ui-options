@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/texture.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/styles.css">
+  <script src="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <style>
+    body{margin:0}
+    a{color:var(--blue)}
+    a:hover{color:var(--ink)}
+    image-slot{display:block;width:100%;height:100%}
+    [data-pills] > *{width:100%}
+    [data-pills] button{width:100% !important;justify-content:center !important}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;box-sizing:border-box;padding:72px 48px 48px;background:var(--paper);font-family:var(--font-mono);color:var(--ink);">
+  <div style="max-width:1080px;margin:0 auto;">
+
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+      <span style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Layout</span>
+      <div style="display:flex;gap:4px;background:var(--paper-raised);border:1px solid var(--ink-15);border-radius:6px;padding:4px;">
+        <sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pickA }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;padding:6px 12px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">A</button></sc-if>
+        <sc-if value="{{ notA }}"><button onClick="{{ pickA }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;padding:6px 12px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">A</button></sc-if>
+        <sc-if value="{{ isB }}"><button onClick="{{ pickB }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;padding:6px 12px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">B</button></sc-if>
+        <sc-if value="{{ notB }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pickB }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;padding:6px 12px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">B</button></sc-if>
+        <sc-if value="{{ isC }}"><button onClick="{{ pickC }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;padding:6px 12px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">C</button></sc-if>
+        <sc-if value="{{ notC }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pickC }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;padding:6px 12px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">C</button></sc-if>
+      </div>
+      <span style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">{{ layoutName }}</span>
+    </div>
+
+    <sc-if value="{{ isA }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Home A" style="border:1px solid var(--ink-15);border-radius:4px;background:var(--paper-raised);color:var(--ink);overflow:hidden;">
+      <div style="border-bottom:1px solid var(--ink-15);padding:56px 56px 44px;">
+        <h1 style="font-family:var(--font-display);font-style:italic;font-weight:400;font-size:64px;line-height:1.0;letter-spacing:-2px;color:var(--ink);margin:0;">Flavia Buzzi</h1>
+        <p style="font-family:var(--font-display);font-style:italic;font-size:20px;color:var(--muted);margin:16px 0 0;">insegnante d'italiano — online Italian teacher.</p>
+        <div style="margin-top:20px;display:flex;">
+          <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.StatusTag" status="pending" hint-size="auto,28px">A1 → C2 · all levels</x-import>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:72px;padding:48px 56px 8px;">
+        <div>
+          <div style="width:248px;height:248px;border:1px solid var(--ink-15);box-sizing:border-box;line-height:0;">
+            <image-slot id="photo-a" shape="rect" placeholder="Drop your photo"></image-slot>
+          </div>
+          <div style="margin-top:40px;">
+            <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin-bottom:18px;">About</div>
+            <p style="font-size:18px;line-height:1.7;color:var(--ink);margin:0;text-wrap:pretty;">Ciao! For seven years I've helped learners go from a hesitant <em>buongiorno</em> to real, flowing conversation. My lessons are structured but never stiff — we talk about food, films, your week, and the grammar sorts itself out along the way.</p>
+            <p style="font-size:18px;line-height:1.7;color:var(--ink);margin:18px 0 0;text-wrap:pretty;">Starting from zero or polishing toward fluency, we'll build something that actually sticks. <em>Andiamo.</em></p>
+            <div style="margin-top:28px;display:flex;">
+              <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="secondary" tone="blue" onClick="{{ book }}" hint-size="auto,46px">Book a lesson</x-import>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin-bottom:6px;">Links</div>
+          <div style="display:flex;flex-direction:column;border-bottom:1px solid var(--ink-15);">
+            <a href="https://www.italki.com" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid var(--ink-15);text-decoration:none;color:inherit;">
+              <span><span style="font-size:20px;font-weight:600;color:var(--ink);">Lessons on italki</span><span style="display:block;font-size:16px;color:var(--muted);margin-top:4px;">My profile, packages &amp; schedule</span></span>
+              <span style="font-size:18px;color:var(--blue);">↗</span>
+            </a>
+            <a href="#book" onClick="{{ bookLink }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid var(--ink-15);text-decoration:none;color:inherit;">
+              <span><span style="font-size:20px;font-weight:600;color:var(--ink);">Book a lesson</span><span style="display:block;font-size:16px;color:var(--muted);margin-top:4px;">Pick a time on my booking page</span></span>
+              <span style="font-size:18px;color:var(--blue);">→</span>
+            </a>
+            <a href="#intro" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:18px 0;border-top:1px solid var(--ink-15);text-decoration:none;color:inherit;">
+              <span><span style="font-size:20px;font-weight:600;color:var(--ink);">Free intro call</span><span style="display:block;font-size:16px;color:var(--muted);margin-top:4px;">15 minutes, no pressure — say ciao</span></span>
+              <span style="font-size:18px;color:var(--blue);">→</span>
+            </a>
+          </div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin:44px 0 6px;">Reviews</div>
+          <div style="border-top:1px solid var(--ink-15);padding:22px 0;">
+            <p style="font-size:18px;line-height:1.6;color:var(--ink);margin:0;">"Every lesson feels like a conversation with a friend. My confidence has completely changed."</p>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;">
+              <span style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Marcus · Berlin</span>
+              <span style="font-size:12px;color:var(--blue);">5.0</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--ink-15);padding:22px 0;">
+            <p style="font-size:18px;line-height:1.6;color:var(--ink);margin:0;">"Finally a teacher who explains the <em>why</em>. Six months in and I'm dreaming in Italian."</p>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;">
+              <span style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Aiko · Tokyo</span>
+              <span style="font-size:12px;color:var(--blue);">5.0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;padding:24px 56px;border-top:1px solid var(--ink-15);font-size:12px;letter-spacing:1px;text-transform:uppercase;">
+        <a href="mailto:ciao@italianwithflavia.com" style="text-decoration:none;">ciao@italianwithflavia.com</a>
+        <a href="https://www.italki.com" target="_blank" rel="noopener" style="text-decoration:none;">italki</a>
+        <a href="#" style="text-decoration:none;">Instagram</a>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isB }}">
+    <div data-screen-label="Home B" style="border:1px solid var(--ink-15);border-radius:4px;background:var(--paper-raised);color:var(--ink);overflow:hidden;">
+      <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:0;border-bottom:1px solid var(--ink-15);">
+        <div style="padding:56px 48px 48px;border-right:1px solid var(--ink-15);">
+          <h1 style="font-family:var(--font-display);font-style:italic;font-weight:400;font-size:72px;line-height:0.98;letter-spacing:-2px;color:var(--ink);margin:0;">Flavia<br>Buzzi</h1>
+          <p style="font-family:var(--font-display);font-style:italic;font-size:20px;color:var(--muted);margin:20px 0 0;">insegnante d'italiano — online, one to one.</p>
+        </div>
+        <div style="padding:0;line-height:0;min-height:340px;">
+          <image-slot id="photo-b" shape="rect" placeholder="Drop your photo" style="min-height:340px;"></image-slot>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:0;">
+        <div style="padding:48px;border-right:1px solid var(--ink-15);">
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin-bottom:18px;">About</div>
+          <p style="font-size:18px;line-height:1.7;color:var(--ink);margin:0;max-width:560px;text-wrap:pretty;">Ciao! For seven years I've helped learners go from a hesitant <em>buongiorno</em> to real, flowing conversation. My lessons are structured but never stiff — we talk about food, films, your week, and the grammar sorts itself out along the way. Whether you're starting from zero or polishing toward fluency, we'll build something that actually sticks.</p>
+          <div style="margin-top:28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="secondary" tone="blue" onClick="{{ book }}" hint-size="auto,46px">Book a lesson</x-import>
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.StatusTag" status="pending" hint-size="auto,28px">A1 → C2 · all levels</x-import>
+          </div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin:48px 0 6px;">Reviews</div>
+          <div style="border-top:1px solid var(--ink-15);padding:22px 0;">
+            <p style="font-size:18px;line-height:1.6;color:var(--ink);margin:0;">"Every lesson feels like a conversation with a friend. My confidence has completely changed."</p>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;">
+              <span style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Marcus · Berlin</span>
+              <span style="font-size:12px;color:var(--blue);">5.0</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--ink-15);padding:22px 0;">
+            <p style="font-size:18px;line-height:1.6;color:var(--ink);margin:0;">"Patient, structured, and genuinely fun. I look forward to every Tuesday."</p>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;">
+              <span style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);">Sophie · London</span>
+              <span style="font-size:12px;color:var(--blue);">5.0</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding:40px 40px 44px;background:var(--blue);color:var(--paper);">
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--paper);margin-bottom:8px;">Links</div>
+          <a href="https://www.italki.com" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 0;border-top:1px solid rgba(251,246,236,.45);text-decoration:none;color:var(--paper);">
+            <span><span style="font-size:21px;font-weight:600;color:var(--paper);">Lessons on italki</span><span style="display:block;font-size:15px;color:var(--paper);opacity:.85;margin-top:4px;">My profile, packages &amp; schedule</span></span>
+            <span style="font-size:18px;color:var(--paper);">↗</span>
+          </a>
+          <a href="#book" onClick="{{ bookLink }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 0;border-top:1px solid rgba(251,246,236,.45);text-decoration:none;color:var(--paper);">
+            <span><span style="font-size:21px;font-weight:600;color:var(--paper);">Book a lesson</span><span style="display:block;font-size:15px;color:var(--paper);opacity:.85;margin-top:4px;">Pick a time on my booking page</span></span>
+            <span style="font-size:18px;color:var(--paper);">→</span>
+          </a>
+          <a href="#intro" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:20px 0;border-top:1px solid rgba(251,246,236,.45);border-bottom:1px solid rgba(251,246,236,.45);text-decoration:none;color:var(--paper);">
+            <span><span style="font-size:21px;font-weight:600;color:var(--paper);">Free intro call</span><span style="display:block;font-size:15px;color:var(--paper);opacity:.85;margin-top:4px;">15 minutes — say ciao</span></span>
+            <span style="font-size:18px;color:var(--paper);">→</span>
+          </a>
+          <p style="font-family:var(--font-display);font-style:italic;font-size:16px;line-height:1.6;color:var(--paper);opacity:.85;margin:28px 0 0;">Syntax is syntax. Structure is structure. Let's make Italian make sense.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;padding:24px 56px;border-top:1px solid var(--ink-15);font-size:12px;letter-spacing:1px;text-transform:uppercase;">
+        <a href="mailto:ciao@italianwithflavia.com" style="text-decoration:none;">ciao@italianwithflavia.com</a>
+        <a href="https://www.italki.com" target="_blank" rel="noopener" style="text-decoration:none;">italki</a>
+        <a href="#" style="text-decoration:none;">Instagram</a>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isC }}">
+    <div data-screen-label="Home C" style="border:1px solid var(--ink-15);border-radius:4px;background:var(--paper-raised);color:var(--ink);overflow:hidden;">
+      <div style="border-bottom:1px solid var(--ink-15);padding:60px 56px 48px;text-align:center;">
+        <h1 style="font-family:var(--font-display);font-style:italic;font-weight:400;font-size:60px;line-height:1.0;letter-spacing:-2px;color:var(--ink);margin:0;">Flavia Buzzi</h1>
+        <p style="font-family:var(--font-display);font-style:italic;font-size:22px;color:var(--muted);margin:18px 0 0;">Building Italian that makes sense — one conversation at a time.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:64px;padding:52px 56px 12px;">
+        <div>
+          <div style="display:flex;gap:28px;align-items:flex-start;">
+            <div style="flex:none;width:200px;height:248px;border:1px solid var(--ink-15);box-sizing:border-box;line-height:0;">
+              <image-slot id="photo-c" shape="rect" placeholder="Drop your photo"></image-slot>
+            </div>
+            <div style="padding-top:4px;">
+              <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin-bottom:12px;">About</div>
+              <p style="font-size:17px;line-height:1.7;color:var(--ink);margin:0;text-wrap:pretty;">Ciao! I'm an online Italian teacher. For seven years I've taken learners from a hesitant <em>buongiorno</em> to flowing conversation — structured lessons that never feel stiff.</p>
+            </div>
+          </div>
+          <p style="font-size:17px;line-height:1.7;color:var(--ink);margin:28px 0 0;text-wrap:pretty;">We talk about food, films, your week — and the grammar sorts itself out along the way. Zero to fluent, <em>andiamo insieme</em>.</p>
+          <div style="margin-top:28px;display:flex;">
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.StatusTag" status="pending" hint-size="auto,28px">A1 → C2 · all levels</x-import>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin-bottom:18px;">Links</div>
+          <div data-pills="1" style="display:flex;flex-direction:column;gap:14px;align-items:stretch;">
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="primary" tone="blue" onClick="{{ book }}" style="width:100%;justify-content:center;" hint-size="100%,46px">Book a lesson</x-import>
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="secondary" tone="blue" onClick="{{ openItalki }}" style="width:100%;justify-content:center;" hint-size="100%,46px">Lessons on italki ↗</x-import>
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="secondary" tone="blue" style="width:100%;justify-content:center;" hint-size="100%,46px">Free intro call</x-import>
+          </div>
+          <div style="font-size:13px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink);margin:44px 0 18px;">Reviews</div>
+          <div style="border-top:1px solid var(--ink-15);padding-top:24px;">
+            <div style="font-family:var(--font-display);font-size:40px;line-height:0.6;color:var(--blue);height:24px;">“</div>
+            <p style="font-size:19px;line-height:1.6;color:var(--ink);margin:0;">Finally a teacher who explains the <em>why</em>. Six months in and I'm dreaming in Italian.</p>
+            <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:14px;">Aiko · Tokyo &nbsp;·&nbsp; <span style="color:var(--blue);">5.0</span></div>
+          </div>
+          <div style="border-top:1px solid var(--ink-15);padding-top:24px;margin-top:24px;">
+            <div style="font-family:var(--font-display);font-size:40px;line-height:0.6;color:var(--blue);height:24px;">“</div>
+            <p style="font-size:19px;line-height:1.6;color:var(--ink);margin:0;">Patient, structured, and genuinely fun. I look forward to every Tuesday.</p>
+            <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:14px;">Sophie · London &nbsp;·&nbsp; <span style="color:var(--blue);">5.0</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:24px;padding:24px 56px;margin-top:40px;border-top:1px solid var(--ink-15);font-size:12px;letter-spacing:1px;text-transform:uppercase;">
+        <a href="mailto:ciao@italianwithflavia.com" style="text-decoration:none;">ciao@italianwithflavia.com</a>
+        <a href="https://www.italki.com" target="_blank" rel="noopener" style="text-decoration:none;">italki</a>
+        <a href="#" style="text-decoration:none;">Instagram</a>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;onBook&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = { layout: (() => { try { return localStorage.getItem('fb-home-layout') || 'A'; } catch (e) { return 'A'; } })() };
+  pick(l) { try { localStorage.setItem('fb-home-layout', l); } catch (e) {} this.setState({ layout: l }); }
+  renderVals() {
+    const l = this.state.layout;
+    const book = () => this.props.onBook && this.props.onBook();
+    return {
+      isA: l === 'A', notA: l !== 'A', isB: l === 'B', notB: l !== 'B', isC: l === 'C', notC: l !== 'C',
+      layoutName: { A: 'Editorial quadrant', B: 'Blueprint links', C: 'Quiet & serif-led' }[l],
+      pickA: () => this.pick('A'), pickB: () => this.pick('B'), pickC: () => this.pick('C'),
+      book,
+      bookLink: (e) => { e.preventDefault(); book(); },
+      openItalki: () => window.open('https://www.italki.com', '_blank', 'noopener'),
+    };
+  }
+}
+</script>
+</body>
+</html>

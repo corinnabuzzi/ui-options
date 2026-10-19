@@ -1,0 +1,27 @@
+:root {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-display: clamp(46px, 7vw, 60px);
+  --text-h1: 40px;
+  --text-h2: 26px;
+  --text-h3: 20px;
+  --text-lede: 17px;
+  --text-body: 15px;
+  --text-ui: 14px;
+  --text-small: 13px;
+  --text-meta: 12px;
+  --text-eyebrow: 11px;
+  --text-label: 10px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --tracking-display: -0.02em;
+  --tracking-eyebrow: 0.12em;
+  --tracking-label: 0.08em;
+  --leading-lede: 1.55;
+}

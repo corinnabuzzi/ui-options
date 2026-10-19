@@ -1,0 +1,33 @@
+:root {
+  /* base */
+  --sage-50: #F2F6EE;
+  --sage-100: #E4EBE0;
+  --sage-150: #DDE6D8;
+  --sage-200: #C6D4BF;
+  --sage-500: #607A59;
+  --ink-900: #131A10;
+  --basil-600: #2E6B3A;
+  --mint-600: #1B7A56;
+  --white: #FFFFFF;
+
+  /* semantic */
+  --bg: var(--sage-50);
+  --surface: var(--white);
+  --surface-sunken: var(--sage-100);
+  --surface-chip: var(--sage-150);
+  --line: var(--sage-200);
+  --fg: var(--ink-900);
+  --fg-muted: var(--sage-500);
+  --fg-faint: rgba(19, 26, 16, 0.35);
+  --fg-ghost: rgba(19, 26, 16, 0.32);
+  --accent: var(--basil-600);
+  --accent-tint: rgba(46, 107, 58, 0.08);
+  --accent-line: rgba(46, 107, 58, 0.4);
+  --on-accent: var(--white);
+  --success: var(--mint-600);
+  --success-tint: rgba(27, 122, 86, 0.08);
+  --success-tint-strong: rgba(27, 122, 86, 0.12);
+  --booked-fill: rgba(19, 26, 16, 0.07);
+  --past-fill: rgba(19, 26, 16, 0.05);
+  --overlay: rgba(19, 26, 16, 0.48);
+}

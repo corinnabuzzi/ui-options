@@ -27,6 +27,8 @@
 <div style="min-height:100vh;background:var(--paper);font-family:var(--font-mono);color:var(--ink);position:relative;">
 
   <div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:flex;gap:4px;background:var(--paper-raised);border:1px solid var(--ink-15);border-radius:6px;padding:4px;">
+    <sc-if value="{{ navHomeOn }}" hint-placeholder-val="{{ true }}"><button onClick="{{ goHome }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid var(--blue);background:var(--blue);color:var(--paper);cursor:pointer;">Home</button></sc-if>
+    <sc-if value="{{ navHomeOff }}"><button onClick="{{ goHome }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Home</button></sc-if>
     <sc-if value="{{ navBookingOn }}"><button onClick="{{ goBooking }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid var(--blue);background:var(--blue);color:var(--paper);cursor:pointer;">Student</button></sc-if>
     <sc-if value="{{ navBookingOff }}"><button onClick="{{ goBooking }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Student</button></sc-if>
     <sc-if value="{{ navLoginOn }}"><button onClick="{{ goLogin }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid var(--blue);background:var(--blue);color:var(--paper);cursor:pointer;">Teacher Login</button></sc-if>
@@ -35,7 +37,11 @@
     <sc-if value="{{ navDashOff }}"><button onClick="{{ goDashboard }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Dashboard</button></sc-if>
   </div>
 
-  <sc-if value="{{ isBooking }}" hint-placeholder-val="{{ true }}">
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <dc-import name="HomeScreen" on-book="{{ goBooking }}" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+
+  <sc-if value="{{ isBooking }}">
   <div data-screen-label="Booking calendar" style="display:flex;min-height:100vh;">
     <div style="flex:0 0 320px;padding:48px 40px;border-right:1px solid var(--ink-15);">
       <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">{{ teacherEyebrow }}</div>
@@ -303,7 +309,7 @@ class Component extends DCLogic {
   monthNamesShort = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 
   state = {
-    screen: 'booking',
+    screen: 'home',
     view: 'week',
     weekOffset: 0,
     monthOffset: 0,
@@ -391,6 +397,9 @@ class Component extends DCLogic {
     const vals = {};
 
     vals.screen = s.screen;
+    vals.isHome = s.screen === 'home';
+    vals.goHome = () => this.setState({ screen: 'home' });
+    vals.navHomeOn = s.screen === 'home'; vals.navHomeOff = s.screen !== 'home';
     vals.isBooking = s.screen === 'booking';
     vals.isLogin = s.screen === 'login';
     vals.isDashboard = s.screen === 'dashboard';

@@ -1,0 +1,10 @@
+:root {
+  --shadow-card: 0 12px 32px rgba(19, 26, 16, 0.08);
+  --shadow-pop: 0 8px 24px rgba(19, 26, 16, 0.12);
+  --shadow-modal: 0 20px 60px rgba(19, 26, 16, 0.25);
+  --blur-overlay: 4px;
+  --ease-out: ease-out;
+  --dur-fast: 0.15s;
+  --dur-modal: 0.22s;
+}
+@keyframes modalIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }

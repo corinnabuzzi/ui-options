@@ -35,7 +35,11 @@
   </sc-for>
 </div>
 
-<sc-if value="{{ isBooking }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<iframe src="home.html" title="Home" style="display:block;width:100%;height:100vh;border:none;"></iframe>
+</sc-if>
+
+<sc-if value="{{ isBooking }}" hint-placeholder-val="{{ false }}">
 <div data-screen-label="Booking" style="max-width:1024px;margin:0 auto;padding:56px 24px 40px;">
 
   <div style="margin-bottom:32px;">
@@ -325,7 +329,7 @@ class Component extends DCLogic {
   static MONTH_BOOKED = {3:1,4:2,5:1,6:1,7:1};
 
   state = {
-    screen: 'booking',
+    screen: 'home',
     calView: this.props.defaultCalendarView || 'week',
     selectedDay: 5,
     ghost: null,
@@ -438,6 +442,11 @@ class Component extends DCLogic {
     };
   }
 
+  // home.html (in the Home iframe) posts { ilNavigate: 'booking' } when "Book a lesson" is clicked
+  onHomeMessage = (e) => { if (e.data && e.data.ilNavigate) this.setState({ screen: e.data.ilNavigate }); };
+  componentDidMount() { window.addEventListener('message', this.onHomeMessage); }
+  componentWillUnmount() { window.removeEventListener('message', this.onHomeMessage); }
+
   goLogin() { this.setState({ screen: 'login', loginUsername: '', loginPassword: '', loginError: false }); }
   goBooking() { this.setState({ screen: 'booking' }); }
 
@@ -459,7 +468,7 @@ class Component extends DCLogic {
     const st = this.state;
     const HOURS = Component.HOURS.map(h => ({ label: `${this.pad(h)}:00` }));
 
-    const pageNav = [['booking','Student'],['login','Teacher Login'],['dashboard','Dashboard']].map(([k, label]) => ({
+    const pageNav = [['home','Home'],['booking','Student'],['login','Teacher Login'],['dashboard','Dashboard']].map(([k, label]) => ({
       label,
       onClick: () => k === 'login' ? this.goLogin() : this.setState({ screen: k }),
       style: {
@@ -613,7 +622,7 @@ class Component extends DCLogic {
     const emptyTextMap = { all: 'No bookings yet.', pending: 'No pending bookings yet.', confirmed: 'No confirmed bookings yet.', declined: 'No declined bookings yet.' };
 
     return {
-      isBooking: st.screen === 'booking', isLogin: st.screen === 'login', isDashboard: st.screen === 'dashboard',
+      isHome: st.screen === 'home', isBooking: st.screen === 'booking', isLogin: st.screen === 'login', isDashboard: st.screen === 'dashboard',
       isWeek: st.calView === 'week', isDay: st.calView === 'day', isMonth: st.calView === 'month',
       rangeLabel, viewToggle, pageNav, hours: HOURS,
       weekDays, dayCol, dayViewLabel,
