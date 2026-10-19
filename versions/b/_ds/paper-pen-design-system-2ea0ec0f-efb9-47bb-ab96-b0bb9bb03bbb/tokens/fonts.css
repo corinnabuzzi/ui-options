@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=Newsreader:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+:root{
+  --font-display-graphic:'Instrument Serif',Georgia,serif;
+  --font-mono-graphic:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --font-display-bookish:'Fraunces',Georgia,serif;
+  --font-mono-bookish:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --font-display-gentle:'Newsreader',Georgia,serif;
+  --font-mono-gentle:'Space Mono',ui-monospace,Menlo,monospace;
+
+  --font-display:var(--font-display-bookish);
+  --font-mono:var(--font-mono-bookish);
+}
+[data-font-theme="graphic"]{--font-display:var(--font-display-graphic);--font-mono:var(--font-mono-graphic)}
+[data-font-theme="bookish"]{--font-display:var(--font-display-bookish);--font-mono:var(--font-mono-bookish)}
+[data-font-theme="gentle"]{--font-display:var(--font-display-gentle);--font-mono:var(--font-mono-gentle)}

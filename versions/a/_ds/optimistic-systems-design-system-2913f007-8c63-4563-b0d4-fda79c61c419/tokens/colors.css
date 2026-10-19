@@ -1,0 +1,57 @@
+/* ============================================================
+   COLORS — Optimistic Systems
+   Strict palette: three colors + one border gray.
+   Blue is an accent, never a supporting color. Use it only
+   where it means "active / interactive / primary accent".
+   ============================================================ */
+
+:root {
+  /* --- Base palette --- */
+  --color-bg:        #f6f4ef; /* warm off-white, papery — not pure white */
+  --color-bg-alt:    #F7F3EC; /* alternate ground, marginally warmer */
+  --color-ink:       #111111; /* inky near-black — ink on paper, not #000 */
+  --color-ink-alt:   #1A1714; /* alternate text, slight warmth */
+  --color-blue:      #0000FF; /* pure blue — aggressive, deliberate, sparing */
+  --color-blue-alt:  #1F3DF0; /* alternate accent */
+
+  /* --- Neutrals (the only grays permitted) --- */
+  --color-border:    #d0cec9; /* hairline rule — the single structural gray */
+  --color-gray:      #888888; /* muted text (captions, meta, status) */
+  --color-gray-dim:  #bbbbbb; /* dim text (de-emphasised mono tokens) */
+
+  /* --- Semantic aliases --- */
+  --bg:           var(--color-bg);
+  --surface:      var(--color-bg);   /* no cards — surface == ground */
+  --text:         var(--color-ink);
+  --text-muted:   var(--color-gray);
+  --text-dim:     var(--color-gray-dim);
+  --accent:       var(--color-blue);
+  --accent-hover: var(--color-blue);
+  --border-color: var(--color-border);
+  --rule:         var(--color-border);
+
+  /* link / interactive */
+  --link:         var(--color-blue);
+}
+
+/* ============================================================
+   BLUEPRINT MODE — invert the ground.
+   Not a separate palette: the same colors in a different
+   register. Blue field, off-white line work. References
+   architectural blueprints. Apply as a scope, not site-wide.
+   ============================================================ */
+
+.blueprint {
+  --bg:           var(--color-blue);
+  --surface:      var(--color-blue);
+  --text:         var(--color-bg);
+  --text-muted:   color-mix(in srgb, var(--color-bg) 70%, transparent);
+  --text-dim:     color-mix(in srgb, var(--color-bg) 45%, transparent);
+  --accent:       var(--color-bg);
+  --border-color: color-mix(in srgb, var(--color-bg) 45%, transparent);
+  --rule:         color-mix(in srgb, var(--color-bg) 45%, transparent);
+  --link:         var(--color-bg);
+
+  background: var(--bg);
+  color: var(--text);
+}

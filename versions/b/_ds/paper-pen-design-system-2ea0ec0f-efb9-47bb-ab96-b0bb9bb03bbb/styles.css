@@ -1,0 +1,9 @@
+@import 'tokens/fonts.css';
+@import 'tokens/colors.css';
+@import 'tokens/typography.css';
+@import 'tokens/spacing.css';
+@import 'tokens/texture.css';
+*{box-sizing:border-box}
+body{background:var(--surface-page);color:var(--text-ink);font-family:var(--font-mono)}
+a{color:var(--text-link);text-decoration:underline}
+a:hover{opacity:.75}

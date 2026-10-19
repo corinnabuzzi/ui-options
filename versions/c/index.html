@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .thin-scroll { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+  .thin-scroll:hover { scrollbar-color: #C6D4BF transparent; }
+  .thin-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+  .thin-scroll::-webkit-scrollbar-thumb { background: transparent; border-radius: 4px; }
+  .thin-scroll:hover::-webkit-scrollbar-thumb { background: #C6D4BF; }
+  @media (max-width: 640px) {
+    .modal-overlay { align-items: flex-end !important; }
+    .modal-card { width: 100% !important; border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+  }
+  @media (max-width: 640px) { .page-nav { position: static !important; width: max-content; margin: 12px 12px 0 auto; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#F2F6EE;color:#131A10;font-family:'DM Sans',sans-serif;position:relative;">
+
+<div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:flex;border:1px solid #C6D4BF;border-radius:999px;padding:2px;background:#F2F6EE;">
+  <sc-for list="{{ pageNav }}" as="p" hint-placeholder-count="3">
+    <button onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+  </sc-for>
+</div>
+
+<sc-if value="{{ isBooking }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Booking" style="max-width:1024px;margin:0 auto;padding:56px 24px 40px;">
+
+  <div style="margin-bottom:32px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#2E6B3A;font-weight:500;margin-bottom:14px;">Italian Lessons · Book a Lesson</div>
+    <h1 style="font-family:Fraunces,serif;font-weight:500;font-size:clamp(46px,7vw,60px);letter-spacing:-0.02em;margin:0 0 14px;color:#131A10;">Flavia Buzzi</h1>
+    <p style="font-family:Fraunces,serif;font-style:italic;color:#607A59;font-size:17px;max-width:520px;line-height:1.55;margin:0;">Pick any open slot to request a lesson. The calendar shows my real availability — booked hours are blocked, everything else is yours.</p>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <button style="border:1px solid #C6D4BF;border-radius:999px;padding:8px 18px;background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;color:#131A10;cursor:pointer;">Today</button>
+      <div style="display:flex;border:1px solid #C6D4BF;border-radius:999px;overflow:hidden;">
+        <button style="border:none;background:transparent;padding:8px 14px;font-size:15px;color:#131A10;cursor:pointer;border-right:1px solid #C6D4BF;">‹</button>
+        <button style="border:none;background:transparent;padding:8px 14px;font-size:15px;color:#131A10;cursor:pointer;">›</button>
+      </div>
+      <div style="font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;color:#131A10;">{{ rangeLabel }}</div>
+    </div>
+    <div style="display:flex;border:1px solid #C6D4BF;border-radius:999px;padding:2px;">
+      <sc-for list="{{ viewToggle }}" as="v" hint-placeholder-count="3">
+        <button onClick="{{ v.onClick }}" style="{{ v.style }}">{{ v.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:14px;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:14px;height:14px;border-radius:4px;background:rgba(19,26,16,0.07);border-left:3px solid #131A10;"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;">Booked</span>
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#2E6B3A;font-weight:600;">Click any open slot to request →</div>
+  </div>
+
+  <div class="thin-scroll" style="border:1px solid #C6D4BF;border-radius:16px;max-height:640px;overflow:auto;background:#F2F6EE;">
+
+    <sc-if value="{{ isWeek }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:52px repeat(7,1fr);position:sticky;top:0;z-index:2;background:#E4EBE0;border-bottom:1px solid #C6D4BF;">
+        <div></div>
+        <sc-for list="{{ weekDays }}" as="day" hint-placeholder-count="7">
+          <div onClick="{{ day.headerClick }}" style="{{ day.headerStyle }}">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#607A59;margin-bottom:4px;">{{ day.abbr }}</div>
+            <div style="{{ day.numStyle }}">{{ day.num }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:52px repeat(7,1fr);">
+        <div>
+          <sc-for list="{{ hours }}" as="hr" hint-placeholder-count="11">
+            <div style="height:64px;display:flex;align-items:flex-start;justify-content:flex-end;padding-right:8px;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#607A59;transform:translateY(-6px);">{{ hr.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <sc-for list="{{ weekDays }}" as="day" hint-placeholder-count="7">
+          <div style="{{ day.colStyle }}" onMouseMove="{{ day.onMouseMove }}" onMouseLeave="{{ day.onMouseLeave }}" onClick="{{ day.onClick }}">
+            <sc-for list="{{ hours }}" as="hr" hint-placeholder-count="11">
+              <div style="height:64px;border-top:1px solid #C6D4BF;"></div>
+            </sc-for>
+            <sc-if value="{{ day.past }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;inset:0;background:rgba(19,26,16,0.05);"></div>
+            </sc-if>
+            <sc-for list="{{ day.booked }}" as="b" hint-placeholder-count="0">
+              <div style="{{ b.style }}">{{ b.label }}</div>
+            </sc-for>
+            <sc-if value="{{ day.showGhost }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ day.ghostStyle }}">{{ day.ghostLabel }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isDay }}" hint-placeholder-val="{{ false }}">
+      <div style="position:sticky;top:0;z-index:2;background:#E4EBE0;border-bottom:1px solid #C6D4BF;padding:16px 20px;">
+        <div style="font-family:Fraunces,serif;font-weight:500;font-size:20px;color:#131A10;">{{ dayViewLabel }}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:52px 1fr;">
+        <div>
+          <sc-for list="{{ hours }}" as="hr" hint-placeholder-count="11">
+            <div style="height:64px;display:flex;align-items:flex-start;justify-content:flex-end;padding-right:8px;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#607A59;transform:translateY(-6px);">{{ hr.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="{{ dayCol.colStyle }}" onMouseMove="{{ dayCol.onMouseMove }}" onMouseLeave="{{ dayCol.onMouseLeave }}" onClick="{{ dayCol.onClick }}">
+          <sc-for list="{{ hours }}" as="hr" hint-placeholder-count="11">
+            <div style="height:64px;border-top:1px solid #C6D4BF;"></div>
+          </sc-for>
+          <sc-if value="{{ dayCol.past }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:rgba(19,26,16,0.05);"></div>
+          </sc-if>
+          <sc-for list="{{ dayCol.booked }}" as="b" hint-placeholder-count="0">
+            <div style="{{ b.style }}">{{ b.label }}</div>
+          </sc-for>
+          <sc-if value="{{ dayCol.showGhost }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ dayCol.ghostStyle }}">{{ dayCol.ghostLabel }}</div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isMonth }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);position:sticky;top:0;z-index:2;background:#E4EBE0;border-bottom:1px solid #C6D4BF;">
+        <sc-for list="{{ monthHeaders }}" as="h" hint-placeholder-count="7">
+          <div style="padding:10px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#607A59;">{{ h }}</div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);">
+        <sc-for list="{{ monthCells }}" as="c" hint-placeholder-count="42">
+          <div onClick="{{ c.onClick }}" style="{{ c.style }}">
+            <sc-if value="{{ c.isToday }}" hint-placeholder-val="{{ false }}">
+              <div style="width:22px;height:22px;border-radius:999px;background:#131A10;color:#F2F6EE;display:flex;align-items:center;justify-content:center;font-size:12px;">{{ c.num }}</div>
+            </sc-if>
+            <sc-if value="{{ c.notToday }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:12px;">{{ c.num }}</div>
+            </sc-if>
+            <sc-if value="{{ c.hasBooked }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:4px;display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;color:#607A59;background:#DDE6D8;border-radius:999px;padding:2px 6px;">{{ c.bookedLabel }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:8px;">
+    <div style="font-family:Fraunces,serif;font-style:italic;color:#607A59;font-size:14px;">Requests are confirmed by email, usually within a day.</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;opacity:0.7;">Europe/Rome · 10:00–21:00</div>
+  </div>
+
+</div>
+
+<button onClick="{{ goLogin }}" style="position:fixed;bottom:20px;right:20px;background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:rgba(19,26,16,0.32);cursor:pointer;" style-hover="color:rgba(19,26,16,0.6);">Teacher login</button>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Login" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+  <div style="width:100%;max-width:384px;text-align:center;margin-bottom:24px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#607A59;margin-bottom:14px;">Teacher access</div>
+    <h1 style="font-family:Fraunces,serif;font-weight:500;font-size:40px;letter-spacing:-0.02em;margin:0;color:#131A10;line-height:1.15;">
+      <div>Welcome back,</div>
+      <div style="font-style:italic;">Flavia</div>
+    </h1>
+  </div>
+  <div style="width:100%;max-width:384px;background:#ffffff;border:1px solid #C6D4BF;border-radius:20px;box-shadow:0 12px 32px rgba(19,26,16,0.08);padding:32px;display:flex;flex-direction:column;gap:16px;">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Username</div>
+      <input type="text" value="{{ loginUsername }}" onChange="{{ onUsernameChange }}" style="width:100%;border:1px solid #C6D4BF;border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;background:#F2F6EE;" />
+    </div>
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Password</div>
+      <input type="password" value="{{ loginPassword }}" onChange="{{ onPasswordChange }}" style="width:100%;border:1px solid #C6D4BF;border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;background:#F2F6EE;" />
+    </div>
+    <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
+      <div style="font-family:Fraunces,serif;font-style:italic;color:#2E6B3A;font-size:14px;">Those credentials don't look right — try again.</div>
+    </sc-if>
+    <button onClick="{{ handleLoginSubmit }}" style="{{ loginBtnStyle }}" disabled="{{ loginBtnDisabled }}">{{ loginBtnLabel }}</button>
+  </div>
+  <button onClick="{{ goBooking }}" style="margin-top:24px;background:none;border:none;text-decoration:underline;color:#2E6B3A;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;">← Back to booking page</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Dashboard" style="max-width:672px;margin:0 auto;padding:56px 24px;">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:#607A59;margin-bottom:14px;">Teacher dashboard</div>
+      <h1 style="font-family:Fraunces,serif;font-weight:500;font-size:40px;letter-spacing:-0.02em;margin:0 0 10px;color:#131A10;">Bookings</h1>
+      <div style="font-family:Fraunces,serif;font-style:italic;color:#607A59;font-size:15px;">{{ dashboardStatusLine }}</div>
+    </div>
+    <button onClick="{{ handleLogout }}" style="background:none;border:none;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;cursor:pointer;">Log out</button>
+  </div>
+
+  <div style="display:flex;gap:24px;border-bottom:1px solid #C6D4BF;margin-bottom:24px;">
+    <sc-for list="{{ filterTabs }}" as="t" hint-placeholder-count="4">
+      <button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }} <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#607A59;">({{ t.count }})</span></button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ dashboardEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="text-align:center;padding:48px 0;font-family:Fraunces,serif;font-style:italic;color:#607A59;font-size:15px;">{{ dashboardEmptyText }}</div>
+  </sc-if>
+
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <sc-for list="{{ filteredBookings }}" as="b" hint-placeholder-count="0">
+      <div style="{{ b.cardStyle }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+          <div>
+            <div style="font-weight:600;font-size:15px;color:#131A10;">{{ b.name }}</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#607A59;margin-top:2px;">{{ b.email }}</div>
+          </div>
+          <div style="{{ b.pillStyle }}">{{ b.statusLabel }}</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#607A59;margin-top:10px;">{{ b.metaLine }}</div>
+        <sc-if value="{{ b.hasMessage }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:Fraunces,serif;font-style:italic;font-size:14px;color:#131A10;border-left:2px solid #C6D4BF;padding-left:12px;margin-top:10px;">"{{ b.message }}"</div>
+        </sc-if>
+        <sc-if value="{{ b.isPending }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:10px;margin-top:14px;">
+            <button onClick="{{ b.onDecline }}" style="flex:1;border:1px solid #C6D4BF;background:transparent;color:#607A59;border-radius:10px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">Decline</button>
+            <button onClick="{{ b.onConfirm }}" style="flex:2;border:none;background:#2E6B3A;color:#ffffff;border-radius:10px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">Confirm</button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+<div class="modal-overlay" onClick="{{ overlayClick }}" style="position:fixed;inset:0;background:rgba(19,26,16,0.48);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;">
+  <div class="modal-card" onClick="{{ stopClick }}" style="width:min(480px,92vw);background:#F2F6EE;border-radius:20px;box-shadow:0 20px 60px rgba(19,26,16,0.25);overflow:hidden;animation:modalIn 0.22s ease-out;">
+
+    <sc-if value="{{ modalSubmitted }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:56px 32px;text-align:center;">
+        <div style="width:56px;height:56px;border-radius:999px;background:rgba(27,122,86,0.12);color:#1B7A56;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 20px;">✓</div>
+        <h2 style="font-family:Fraunces,serif;font-weight:500;font-size:26px;margin:0 0 10px;color:#131A10;">Request sent</h2>
+        <p style="font-family:Fraunces,serif;font-style:italic;color:#607A59;font-size:15px;margin:0 0 20px;">Flavia will confirm your slot by email, usually within a day.</p>
+        <button onClick="{{ closeModal }}" style="background:none;border:none;text-decoration:underline;color:#2E6B3A;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;">Back to calendar</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ modalFormVisible }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#E4EBE0;padding:28px 32px;">
+        <h2 style="font-family:Fraunces,serif;font-weight:500;font-size:26px;margin:0 0 8px;color:#131A10;">Request a lesson</h2>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;">{{ modalDateLabel }}</div>
+      </div>
+      <div style="padding:28px 32px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:14px;">
+          <div style="flex:1;position:relative;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Start</div>
+            <button onClick="{{ toggleTimeDropdown }}" style="width:100%;text-align:left;border:1px solid #C6D4BF;border-radius:10px;padding:10px 12px;background:#ffffff;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;">
+              <span>{{ modalStartLabel }}</span>
+              <span style="{{ chevronStyle }}">⌄</span>
+            </button>
+            <sc-if value="{{ timeDropdownOpen }}" hint-placeholder-val="{{ false }}">
+              <div class="thin-scroll" style="position:absolute;top:100%;left:0;right:0;margin-top:4px;max-height:220px;overflow-y:auto;background:#ffffff;border:1px solid #C6D4BF;border-radius:10px;z-index:5;box-shadow:0 8px 24px rgba(19,26,16,0.12);">
+                <sc-for list="{{ timeOptions }}" as="opt" hint-placeholder-count="0">
+                  <div onClick="{{ opt.onClick }}" style="{{ opt.style }}">{{ opt.label }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Duration</div>
+            <div style="display:flex;border:1px solid #C6D4BF;border-radius:10px;overflow:hidden;">
+              <sc-for list="{{ durationOptions }}" as="d" hint-placeholder-count="4">
+                <button onClick="{{ d.onClick }}" style="{{ d.style }}">{{ d.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;">
+          <div style="flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Name</div>
+            <input type="text" placeholder="Sofia Moretti" value="{{ modalName }}" onChange="{{ onNameChange }}" style="width:100%;border:1px solid #C6D4BF;border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;background:#ffffff;" />
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Email</div>
+            <input type="email" placeholder="sofia@example.com" value="{{ modalEmail }}" onChange="{{ onEmailChange }}" style="width:100%;border:1px solid #C6D4BF;border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;background:#ffffff;" />
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#607A59;margin-bottom:6px;">Message</div>
+          <textarea placeholder="Your level, what you'd like to work on, any questions…" value="{{ modalMessage }}" onChange="{{ onMessageChange }}" rows="3" style="width:100%;border:1px solid #C6D4BF;border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;background:#ffffff;resize:vertical;"></textarea>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;">
+          <button onClick="{{ closeModal }}" style="flex:1;border:1px solid #C6D4BF;background:transparent;color:#607A59;border-radius:10px;padding:12px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">Cancel</button>
+          <button onClick="{{ submitRequest }}" disabled="{{ sendDisabled }}" style="{{ sendBtnStyle }}">Send request</button>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultCalendarView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;week&quot;,&quot;options&quot;:[&quot;week&quot;,&quot;day&quot;,&quot;month&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;teacherPassword&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;admin&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+class Component extends DCLogic {
+  static HOURS = [10,11,12,13,14,15,16,17,18,19,20];
+  static ROW_H = 64;
+  static DAY_ABBR = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+  static FULL_DAY = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  static BOOKED = [{day:3,hour:14,dur:60},{day:4,hour:14,dur:60},{day:5,hour:10,dur:60}];
+  static MONTH_BOOKED = {3:1,4:2,5:1,6:1,7:1};
+
+  state = {
+    screen: 'booking',
+    calView: this.props.defaultCalendarView || 'week',
+    selectedDay: 5,
+    ghost: null,
+    modalOpen: false,
+    modalDay: null, modalHour: null, modalMin: null,
+    modalDuration: 60,
+    modalName: '', modalEmail: '', modalMessage: '',
+    modalSubmitted: false,
+    timeDropdownOpen: false,
+    loginUsername: '', loginPassword: '', loginError: false, loginSubmitting: false,
+    dashboardFilter: 'all',
+    bookings: [
+      {id:1,name:'Test Student',email:'test.student@example.com',metaLine:'Thu 6 Aug · 12:00 · 30 min',message:'Testing v2 admin dashboard',status:'pending'},
+      {id:2,name:'Test Student 2',email:'test2@example.com',metaLine:'Fri 7 Aug · 13:00 · 45 min',message:'Second test booking',status:'pending'},
+      {id:3,name:'Dashboard Test Student',email:'dashboard.test@example.com',metaLine:'Mon 10 Aug · 18:00 · 60 min',message:'Testing the new admin dashboard',status:'confirmed'}
+    ]
+  };
+
+  pad(n) { return String(n).padStart(2,'0'); }
+  ordinal(n) {
+    const s = ['th','st','nd','rd'], v = n % 100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+  }
+  dowIndex(num) { return ((num - 3) % 7 + 7) % 7; }
+  isPastDay(num) { return num < (this.props.defaultCalendarView ? 5 : 5); }
+
+  timeOptionsList() {
+    const opts = [];
+    for (let h = 9; h <= 21; h++) {
+      for (const m of [0,30]) {
+        if (h === 21 && m > 0) continue;
+        opts.push({ value: h*60+m, hour: h, min: m, isHour: m === 0 });
+      }
+    }
+    return opts;
+  }
+
+  getGhostForColumn(dayNum, offsetY, isPast) {
+    if (isPast) return null;
+    const totalMin = (offsetY / Component.ROW_H) * 60;
+    let snapped = Math.round(totalMin / 15) * 15;
+    snapped = Math.max(0, Math.min(snapped, Component.HOURS.length*60 - 15));
+    const startHour = 10 + Math.floor(snapped/60);
+    const startMin = snapped % 60;
+    const overlap = Component.BOOKED.some(b => {
+      if (b.day !== dayNum) return false;
+      const bs = (b.hour-10)*60, be = bs + b.dur;
+      return snapped >= bs && snapped < be;
+    });
+    if (overlap) return null;
+    return { day: dayNum, top: (snapped/60)*Component.ROW_H, hour: startHour, min: startMin };
+  }
+
+  handleColMouseMove(e, dayNum, isPast) {
+    if (isPast) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetY = e.clientY - rect.top;
+    this.setState({ ghost: this.getGhostForColumn(dayNum, offsetY, isPast) });
+  }
+  handleColMouseLeave() { this.setState({ ghost: null }); }
+  handleColClick(e, dayNum, isPast) {
+    if (isPast) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetY = e.clientY - rect.top;
+    const slot = this.getGhostForColumn(dayNum, offsetY, isPast);
+    if (slot) this.openModal(dayNum, slot.hour, slot.min);
+  }
+
+  openModal(dayNum, hour, min) {
+    this.setState({
+      modalOpen: true, modalDay: dayNum, modalHour: hour, modalMin: min,
+      modalDuration: 60, modalName: '', modalEmail: '', modalMessage: '',
+      modalSubmitted: false, timeDropdownOpen: false
+    });
+  }
+  closeModal() { this.setState({ modalOpen: false }); }
+
+  buildBookedBlocks(dayNum) {
+    return Component.BOOKED.filter(b => b.day === dayNum).map(b => ({
+      label: `Booked ${this.pad(b.hour)}:00–${this.pad(b.hour + b.dur/60)}:00`,
+      style: {
+        position: 'absolute', left: 4, right: 4,
+        top: (b.hour-10)*Component.ROW_H + 2,
+        height: (b.dur/60)*Component.ROW_H - 4,
+        background: 'rgba(19,26,16,0.07)', borderLeft: '3px solid #131A10',
+        borderRadius: 6, padding: '4px 8px', fontFamily: "'JetBrains Mono',monospace",
+        fontSize: 10, color: '#131A10', pointerEvents: 'none', overflow: 'hidden'
+      }
+    }));
+  }
+
+  buildDayColumn(dayNum, isPast) {
+    const ghost = this.state.ghost;
+    const showGhost = !!ghost && ghost.day === dayNum;
+    return {
+      past: isPast,
+      colStyle: { position: 'relative', borderRight: '1px solid #C6D4BF', cursor: isPast ? 'default' : 'pointer' },
+      onMouseMove: (e) => this.handleColMouseMove(e, dayNum, isPast),
+      onMouseLeave: () => this.handleColMouseLeave(),
+      onClick: (e) => this.handleColClick(e, dayNum, isPast),
+      booked: this.buildBookedBlocks(dayNum),
+      showGhost,
+      ghostStyle: showGhost ? {
+        position: 'absolute', left: 4, right: 4, top: ghost.top + 2, height: 30,
+        border: '1.5px dashed #2E6B3A', background: 'rgba(46,107,58,0.08)',
+        borderRadius: 6, display: 'flex', alignItems: 'center', paddingLeft: 6,
+        fontFamily: "'JetBrains Mono',monospace", fontSize: 10, color: '#2E6B3A', pointerEvents: 'none'
+      } : {},
+      ghostLabel: showGhost ? `${this.pad(ghost.hour)}:${this.pad(ghost.min)} · request` : ''
+    };
+  }
+
+  goLogin() { this.setState({ screen: 'login', loginUsername: '', loginPassword: '', loginError: false }); }
+  goBooking() { this.setState({ screen: 'booking' }); }
+
+  handleLoginSubmit() {
+    if (this.state.loginSubmitting) return;
+    if (!this.state.loginUsername || !this.state.loginPassword) return;
+    this.setState({ loginSubmitting: true, loginError: false });
+    setTimeout(() => {
+      if (this.state.loginUsername === 'admin' && this.state.loginPassword === (this.props.teacherPassword || 'admin')) {
+        this.setState({ screen: 'dashboard', loginSubmitting: false });
+      } else {
+        this.setState({ loginSubmitting: false, loginError: true });
+      }
+    }, 700);
+  }
+  handleLogout() { this.setState({ screen: 'login', loginUsername: '', loginPassword: '', loginError: false }); }
+
+  renderVals() {
+    const st = this.state;
+    const HOURS = Component.HOURS.map(h => ({ label: `${this.pad(h)}:00` }));
+
+    const pageNav = [['booking','Student'],['login','Teacher Login'],['dashboard','Dashboard']].map(([k, label]) => ({
+      label,
+      onClick: () => k === 'login' ? this.goLogin() : this.setState({ screen: k }),
+      style: {
+        padding: '6px 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
+        fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500,
+        background: st.screen === k ? '#131A10' : 'transparent',
+        color: st.screen === k ? '#F2F6EE' : '#607A59'
+      }
+    }));
+    const viewToggle = ['week','day','month'].map(k => ({
+      label: k.charAt(0).toUpperCase() + k.slice(1),
+      onClick: () => this.setState({ calView: k }),
+      style: {
+        padding: '8px 16px', borderRadius: 999, border: 'none', cursor: 'pointer',
+        fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 500,
+        background: st.calView === k ? '#131A10' : 'transparent',
+        color: st.calView === k ? '#F2F6EE' : '#607A59'
+      }
+    }));
+
+    const weekDays = [3,4,5,6,7,8,9].map(num => {
+      const past = num < 5, today = num === 5;
+      const col = this.buildDayColumn(num, past);
+      return {
+        num, abbr: Component.DAY_ABBR[this.dowIndex(num)], past, today,
+        headerClick: () => this.setState({ calView: 'day', selectedDay: num }),
+        headerStyle: { padding: '12px 8px', textAlign: 'center', cursor: 'pointer', borderLeft: '1px solid #C6D4BF' },
+        numStyle: { fontFamily: 'Fraunces,serif', fontWeight: 600, fontSize: 16, color: today ? '#2E6B3A' : (past ? 'rgba(19,26,16,0.35)' : '#131A10') },
+        ...col
+      };
+    });
+
+    const selectedDay = st.selectedDay;
+    const dayPast = selectedDay < 5;
+    const dayCol = this.buildDayColumn(selectedDay, dayPast);
+    const dayViewLabel = `${Component.FULL_DAY[this.dowIndex(selectedDay)]}, ${selectedDay} August 2026`;
+
+    const rangeLabel = st.calView === 'week' ? '3 – 9 August 2026'
+      : st.calView === 'day' ? dayViewLabel
+      : 'August 2026';
+
+    // month grid
+    const prevMonthTail = [27,28,29,30,31];
+    const cells = [];
+    prevMonthTail.forEach(n => cells.push({ num: n, cur: false }));
+    for (let d = 1; d <= 31; d++) cells.push({ num: d, cur: true });
+    let nextN = 1;
+    while (cells.length < 42) cells.push({ num: nextN++, cur: false, isNext: true });
+
+    const monthCells = cells.map(c => {
+      const isCurrent = c.cur;
+      const isPast = isCurrent ? c.num < 5 : true;
+      const isToday = isCurrent && c.num === 5;
+      const bookedCount = isCurrent ? Component.MONTH_BOOKED[c.num] : undefined;
+      const clickable = isCurrent && !isPast;
+      return {
+        num: c.num,
+        isToday, notToday: !isToday,
+        hasBooked: !!bookedCount,
+        bookedLabel: bookedCount ? `${bookedCount} booked` : '',
+        onClick: clickable ? () => this.setState({ calView: 'day', selectedDay: c.num }) : undefined,
+        style: {
+          minHeight: 84, border: '1px solid #C6D4BF', padding: 8,
+          cursor: clickable ? 'pointer' : 'default',
+          background: isCurrent ? 'transparent' : 'rgba(19,26,16,0.02)',
+          opacity: isCurrent ? (isPast ? 0.4 : 1) : 0.35,
+          fontFamily: "'DM Sans',sans-serif", color: '#131A10'
+        }
+      };
+    });
+
+    // modal
+    const modalDateLabel = st.modalDay ? `${Component.FULL_DAY[this.dowIndex(st.modalDay)]} ${this.ordinal(st.modalDay)}, August 2026 — ${this.pad(st.modalHour)}:${this.pad(st.modalMin)}–${this.pad(st.modalHour + Math.floor((st.modalMin + st.modalDuration)/60))}:${this.pad((st.modalMin + st.modalDuration)%60)}` : '';
+    const modalStartLabel = st.modalHour !== null ? `${this.pad(st.modalHour)}:${this.pad(st.modalMin)}` : '';
+    const startVal = st.modalHour !== null ? st.modalHour*60 + st.modalMin : null;
+
+    const timeOptions = this.timeOptionsList().map(o => ({
+      label: `${this.pad(o.hour)}:${this.pad(o.min)}`,
+      onClick: () => this.setState({ modalHour: o.hour, modalMin: o.min, timeDropdownOpen: false }),
+      style: {
+        padding: '8px 12px', cursor: 'pointer', fontFamily: "'DM Sans',sans-serif", fontSize: 13,
+        fontWeight: o.isHour ? 600 : 400,
+        background: startVal === o.value ? '#2E6B3A' : 'transparent',
+        color: startVal === o.value ? '#ffffff' : '#131A10'
+      }
+    }));
+
+    const durationOptions = [30,45,60,90].map((d,i,arr) => ({
+      label: d, onClick: () => this.setState({ modalDuration: d }),
+      style: {
+        flex: 1, padding: '10px 0', border: 'none', cursor: 'pointer',
+        borderLeft: i === 0 ? 'none' : '1px solid #C6D4BF',
+        fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 600,
+        background: st.modalDuration === d ? '#2E6B3A' : '#ffffff',
+        color: st.modalDuration === d ? '#ffffff' : '#607A59'
+      }
+    }));
+
+    const sendDisabled = !(st.modalName && st.modalEmail);
+
+    // dashboard
+    const filters = ['all','pending','confirmed','declined'];
+    const counts = {
+      all: st.bookings.length,
+      pending: st.bookings.filter(b=>b.status==='pending').length,
+      confirmed: st.bookings.filter(b=>b.status==='confirmed').length,
+      declined: st.bookings.filter(b=>b.status==='declined').length
+    };
+    const filterTabs = filters.map(f => ({
+      label: f.charAt(0).toUpperCase()+f.slice(1), count: counts[f],
+      onClick: () => this.setState({ dashboardFilter: f }),
+      style: {
+        background: 'none', border: 'none', cursor: 'pointer', paddingBottom: 10,
+        fontFamily: "'DM Sans',sans-serif", fontSize: 14,
+        fontWeight: st.dashboardFilter === f ? 700 : 400,
+        color: st.dashboardFilter === f ? '#131A10' : '#607A59',
+        borderBottom: st.dashboardFilter === f ? '2px solid #2E6B3A' : '2px solid transparent',
+        marginBottom: -1
+      }
+    }));
+
+    const filteredBookings = st.bookings
+      .filter(b => st.dashboardFilter === 'all' || b.status === st.dashboardFilter)
+      .map(b => {
+        const pillColors = {
+          pending: { color: '#2E6B3A', bg: 'rgba(46,107,58,0.08)', border: '#2E6B3A' },
+          confirmed: { color: '#1B7A56', bg: 'rgba(27,122,86,0.08)', border: '#1B7A56' },
+          declined: { color: '#607A59', bg: '#DDE6D8', border: '#C6D4BF' }
+        }[b.status];
+        return {
+          ...b,
+          hasMessage: !!b.message,
+          isPending: b.status === 'pending',
+          statusLabel: b.status.charAt(0).toUpperCase()+b.status.slice(1),
+          onConfirm: () => this.setState({ bookings: st.bookings.map(x => x.id===b.id ? {...x,status:'confirmed'} : x) }),
+          onDecline: () => this.setState({ bookings: st.bookings.map(x => x.id===b.id ? {...x,status:'declined'} : x) }),
+          cardStyle: {
+            background: '#ffffff', borderRadius: 14, padding: 20,
+            border: b.status === 'pending' ? '1px solid rgba(46,107,58,0.4)' : '1px solid #C6D4BF'
+          },
+          pillStyle: {
+            fontFamily: "'JetBrains Mono',monospace", fontSize: 10, textTransform: 'uppercase',
+            letterSpacing: '0.06em', fontWeight: 600, padding: '4px 10px', borderRadius: 999,
+            border: `1px solid ${pillColors.border}`, background: pillColors.bg, color: pillColors.color, whiteSpace: 'nowrap'
+          }
+        };
+      });
+
+    const pendingN = counts.pending;
+    const dashboardStatusLine = pendingN > 0 ? `${pendingN} request${pendingN>1?'s':''} waiting for your reply` : 'All caught up.';
+    const emptyTextMap = { all: 'No bookings yet.', pending: 'No pending bookings yet.', confirmed: 'No confirmed bookings yet.', declined: 'No declined bookings yet.' };
+
+    return {
+      isBooking: st.screen === 'booking', isLogin: st.screen === 'login', isDashboard: st.screen === 'dashboard',
+      isWeek: st.calView === 'week', isDay: st.calView === 'day', isMonth: st.calView === 'month',
+      rangeLabel, viewToggle, pageNav, hours: HOURS,
+      weekDays, dayCol, dayViewLabel,
+      monthHeaders: Component.DAY_ABBR,
+      monthCells,
+      goLogin: () => this.goLogin(), goBooking: () => this.goBooking(),
+
+      loginUsername: st.loginUsername, loginPassword: st.loginPassword, loginError: st.loginError,
+      onUsernameChange: (e) => this.setState({ loginUsername: e.target.value }),
+      onPasswordChange: (e) => this.setState({ loginPassword: e.target.value }),
+      handleLoginSubmit: () => this.handleLoginSubmit(),
+      loginBtnDisabled: !(st.loginUsername && st.loginPassword) || st.loginSubmitting,
+      loginBtnLabel: st.loginSubmitting ? 'Signing in…' : 'Sign in',
+      loginBtnStyle: {
+        width: '100%', border: 'none', borderRadius: 10, padding: '12px 20px',
+        fontFamily: "'DM Sans',sans-serif", fontSize: 15, fontWeight: 600,
+        background: '#2E6B3A', color: '#ffffff', marginTop: 4,
+        opacity: (!(st.loginUsername && st.loginPassword) || st.loginSubmitting) ? 0.4 : 1,
+        cursor: (!(st.loginUsername && st.loginPassword) || st.loginSubmitting) ? 'not-allowed' : 'pointer'
+      },
+
+      dashboardStatusLine, handleLogout: () => this.handleLogout(),
+      filterTabs, filteredBookings,
+      dashboardEmpty: filteredBookings.length === 0,
+      dashboardEmptyText: emptyTextMap[st.dashboardFilter],
+
+      modalOpen: st.modalOpen, modalSubmitted: st.modalSubmitted, modalFormVisible: !st.modalSubmitted,
+      modalDateLabel, modalStartLabel, timeDropdownOpen: st.timeDropdownOpen,
+      toggleTimeDropdown: () => this.setState({ timeDropdownOpen: !st.timeDropdownOpen }),
+      chevronStyle: { display: 'inline-block', transition: 'transform 0.15s', transform: st.timeDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', color: '#607A59' },
+      timeOptions, durationOptions,
+      modalName: st.modalName, modalEmail: st.modalEmail, modalMessage: st.modalMessage,
+      onNameChange: (e) => this.setState({ modalName: e.target.value }),
+      onEmailChange: (e) => this.setState({ modalEmail: e.target.value }),
+      onMessageChange: (e) => this.setState({ modalMessage: e.target.value }),
+      sendDisabled,
+      sendBtnStyle: {
+        flex: 2, border: 'none', borderRadius: 10, padding: '12px 20px',
+        fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 600,
+        background: '#2E6B3A', color: '#ffffff',
+        opacity: sendDisabled ? 0.4 : 1, cursor: sendDisabled ? 'not-allowed' : 'pointer'
+      },
+      submitRequest: () => { if (!sendDisabled) this.setState({ modalSubmitted: true }); },
+      closeModal: () => this.closeModal(),
+      overlayClick: () => this.closeModal(),
+      stopClick: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

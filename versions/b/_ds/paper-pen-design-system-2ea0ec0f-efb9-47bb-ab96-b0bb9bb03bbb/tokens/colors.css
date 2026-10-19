@@ -1,0 +1,36 @@
+:root{
+  --ink:#26241F;
+  --ink-60:rgba(38,36,31,.6);
+  --ink-40:rgba(38,36,31,.4);
+  --ink-15:rgba(38,36,31,.15);
+  --ink-08:rgba(38,36,31,.08);
+  --blue:#3F71DE;
+  --blue-10:rgba(63,113,222,.1);
+  --red:#E14A49;
+  --red-10:rgba(225,74,73,.1);
+  --green:#15B64F;
+  --green-10:rgba(21,182,79,.1);
+  --muted:#5F5D58;
+  --paper:#FBF6EC;
+  --paper-raised:#FDFAF2;
+  --white:#FFFFFF;
+
+  --text-ink:var(--ink);
+  --text-muted:var(--muted);
+  --text-on-primary:var(--paper);
+  --text-link:var(--blue);
+  --border-default:var(--ink-15);
+  --border-strong:var(--ink);
+  --surface-page:var(--paper);
+  --surface-card:var(--paper-raised);
+
+  --status-confirmed:var(--green);
+  --status-confirmed-bg:var(--green-10);
+  --status-pending:var(--ink);
+  --status-pending-bg:var(--ink-08);
+  --status-declined:var(--red);
+  --status-declined-bg:var(--red-10);
+  --state-today:var(--blue);
+  --state-booked:var(--ink-08);
+  --state-booked-accent:var(--muted);
+}

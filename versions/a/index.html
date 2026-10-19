@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#f6f4ef">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f6f4ef"/>
+    <rect x="360" y="210" width="480" height="380" fill="none" stroke="#d0cec9" stroke-width="3"/>
+    <line x1="360" y1="300" x2="840" y2="300" stroke="#111111" stroke-width="3"/>
+    <line x1="456" y1="300" x2="456" y2="590" stroke="#d0cec9" stroke-width="2"/>
+    <line x1="552" y1="300" x2="552" y2="590" stroke="#d0cec9" stroke-width="2"/>
+    <line x1="648" y1="300" x2="648" y2="590" stroke="#d0cec9" stroke-width="2"/>
+    <line x1="744" y1="300" x2="744" y2="590" stroke="#d0cec9" stroke-width="2"/>
+    <rect x="468" y="330" width="72" height="70" fill="#0000FF" opacity="0.12"/>
+    <rect x="468" y="330" width="5" height="70" fill="#0000FF"/>
+    <rect x="564" y="430" width="72" height="100" fill="#111111" opacity="0.08"/>
+    <rect x="564" y="430" width="5" height="100" fill="#111111"/>
+    <rect x="756" y="360" width="72" height="60" fill="#111111" opacity="0.08"/>
+    <rect x="756" y="360" width="5" height="60" fill="#111111"/>
+    <circle cx="600" cy="155" r="13" fill="#0000FF"/>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/tokens/animation.css">
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/tokens/base.css">
+  <link rel="stylesheet" href="_ds/optimistic-systems-design-system-2913f007-8c63-4563-b0d4-fda79c61c419/styles.css">
+  <style>
+    html, body { margin: 0; background: var(--color-bg); }
+    *, *::before, *::after { box-sizing: border-box; }
+    .bk-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+    .bk-scroll::-webkit-scrollbar-thumb { background: var(--color-border); }
+    .bk-in:focus { border-color: var(--color-ink) !important; outline: none; }
+    @keyframes bkpop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 640px) { .page-nav { position: static !important; width: max-content; margin: 12px 12px 0 auto; } }
+  </style>
+</helmet>
+<div style="min-height:100vh;background:var(--color-bg)">
+  <div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:inline-flex;border:1px solid var(--color-ink);background:var(--color-bg)">
+    <button onClick="{{ goBooking }}" style="{{ navBookingStyle }}">Student</button>
+    <button onClick="{{ goLogin }}" style="{{ navLoginStyle }}">Teacher Login</button>
+    <button onClick="{{ goDashboard }}" style="{{ navDashStyle }}">Dashboard</button>
+  </div>
+  <sc-if value="{{ isBooking }}" hint-placeholder-val="{{ true }}">
+  <div style="max-width:1200px;margin:0 auto;padding:44px 32px 72px;font-family:var(--font-sans)">
+
+    <header style="margin-bottom:32px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:var(--font-sans);font-weight:600;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--color-blue);margin-bottom:14px">Italian Lessons · Book a Class</div>
+        <h1 style="font-family:var(--font-sans);font-weight:700;font-size:46px;letter-spacing:-1.6px;line-height:1.04;margin:0 0 14px;color:var(--color-ink)">{{ teacherName }}</h1>
+        <p style="font-family:var(--font-serif);font-style:italic;font-size:19px;line-height:1.6;color:var(--color-gray);margin:0;max-width:580px">Pick any open slot to request a lesson. The calendar shows my real availability — booked hours are blocked, everything else is yours.</p>
+      </div>
+      <button onClick="{{ goLogin }}" style="font-family:var(--font-sans);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--color-gray);background:transparent;border:none;cursor:pointer;padding:8px 0">Teacher Login</button>
+    </header>
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button onClick="{{ goToday }}" style="font-family:var(--font-sans);font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--color-ink);background:transparent;border:1px solid var(--color-ink);border-radius:100px;padding:9px 18px;cursor:pointer">Today</button>
+        <div style="display:inline-flex">
+          <button onClick="{{ goPrev }}" aria-label="Previous" style="font-family:var(--font-sans);font-size:18px;line-height:1;color:var(--color-ink);background:transparent;border:1px solid var(--color-border);border-right:none;padding:8px 13px;cursor:pointer">‹</button>
+          <button onClick="{{ goNext }}" aria-label="Next" style="font-family:var(--font-sans);font-size:18px;line-height:1;color:var(--color-ink);background:transparent;border:1px solid var(--color-border);padding:8px 13px;cursor:pointer">›</button>
+        </div>
+        <span style="font-family:var(--font-sans);font-weight:600;font-size:17px;letter-spacing:-0.3px;color:var(--color-ink);margin-left:6px">{{ rangeLabel }}</span>
+      </div>
+      <div style="display:inline-flex;border:1px solid var(--color-ink)">
+        <button onClick="{{ setWeek }}" style="{{ wkStyle }}">Week</button>
+        <button onClick="{{ setDay }}" style="{{ dyStyle }}">Day</button>
+        <button onClick="{{ setMonth }}" style="{{ moStyle }}">Month</button>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:0 0 14px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-gray)">
+      <span style="display:inline-flex;align-items:center;gap:8px"><span style="width:13px;height:13px;background:rgba(17,17,17,0.06);border-left:3px solid var(--color-ink)"></span>Booked</span>
+      <span style="display:inline-flex;align-items:center;gap:8px"><span style="width:13px;height:13px;background:rgba(0,0,255,0.10);border-left:3px solid var(--color-blue)"></span>Requested</span>
+      <span style="display:inline-flex;align-items:center;gap:8px"><span style="width:13px;height:13px;border-left:3px solid var(--color-gray-dim);background-image:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(17,17,17,0.10) 3px,rgba(17,17,17,0.10) 4px)"></span>Unavailable</span>
+      <span style="color:var(--color-blue);font-weight:700">Click an open slot to book →</span>
+    </div>
+
+    {{ calendarView }}
+
+    <footer style="border-top:1px solid var(--color-border);margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <span style="font-family:var(--font-serif);font-style:italic;font-size:15px;color:var(--color-gray)">Requests are confirmed by email, usually within a day.</span>
+      <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--color-gray-dim)">Orari · Europe/Rome · 10:00–21:00</span>
+    </footer>
+
+  </div>
+  </sc-if>
+  <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">{{ loginPage }}</sc-if>
+  <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">{{ dashboardPage }}</sc-if>
+  {{ dialog }}
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:920},&quot;teacherName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Flavia Buzzi&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;dialogStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;popover&quot;,&quot;modal&quot;],&quot;default&quot;:&quot;modal&quot;,&quot;tsType&quot;:&quot;'popover' | 'modal'&quot;},&quot;includeWeekends&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  DAY_START = 600;   // 10:00
+  DAY_END   = 1260;  // 21:00
+  HOUR_PX   = 64;
+
+  GIORNI = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  GIORNI_FULL = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  MESI = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  LESSONS = ['Conversation','Grammar','Beginner','Intermediate','Exam prep (CILS)','Business Italian'];
+
+  // recurring weekly availability of the teacher (mock of synced Google Calendar)
+  // weekday index 0=Mon .. 6=Sun ; [startMinutes, durationMinutes, type?]
+  PATTERN = {
+    0: [[600,60],[930,45],[1140,60]],
+    1: [[660,60],[840,60],[1020,90]],
+    2: [[630,45],[780,60,'block'],[1080,60]],
+    3: [[720,60],[975,45],[1170,60]],
+    4: [[600,90],[840,60],[1140,60]],
+    5: [[660,60],[750,45]],
+    6: [[600,720,'block']]
+  };
+
+  state = {
+    page: 'booking',
+    view: 'week',
+    anchor: this.todayMid(),
+    bookings: this.seedBookings(),
+    loginForm: { username: '', password: '' },
+    dashboardFilter: 'all',
+    hover: null,
+    dialog: { open: false }
+  };
+
+  componentDidMount() {
+    if (!this.state.bookings.some(b => b.demo)) {
+      this.setState({ bookings: this.state.bookings.concat(this.seedBookings()) });
+    }
+  }
+
+  seedBookings() {
+    const d1 = this.addDays(this.todayMid(), 3);
+    const d2 = this.addDays(this.todayMid(), 4);
+    return [
+      { id:'seed1', dateKey:this.ymd(d1), start:720, duration:30, type:'requested', status:'pending', demo:true, name:'Test Student', email:'test.student@example.com', message:'Testing v2 admin dashboard' },
+      { id:'seed2', dateKey:this.ymd(d2), start:780, duration:45, type:'requested', status:'pending', demo:true, name:'Test Student 2', email:'test2@example.com', message:'Second test booking' }
+    ];
+  }
+
+  // ---------- date helpers ----------
+  todayMid() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+  addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  ymd(d) { return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate(); }
+  parseYmd(key) { const p = key.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); }
+  wd(d) { return (d.getDay() + 6) % 7; } // Mon=0
+  weekStartOf(d) { return this.addDays(d, -this.wd(d)); }
+  isPast(d) { return d < this.todayMid(); }
+  isSameDay(a, b) { return this.ymd(a) === this.ymd(b); }
+  fmtHM(m) { const h = Math.floor(m/60), mm = m%60; return (h<10?'0':'')+h + ':' + (mm<10?'0':'')+mm; }
+
+  weekendsOn() { return this.props.includeWeekends !== false; }
+
+  viewDays() {
+    const start = this.weekStartOf(this.state.anchor);
+    const n = this.weekendsOn() ? 7 : 5;
+    const out = []; for (let i=0;i<n;i++) out.push(this.addDays(start,i));
+    return out;
+  }
+
+  totalPx() { return (this.DAY_END - this.DAY_START) / 60 * this.HOUR_PX; }
+
+  bookingsFor(date) {
+    const key = this.ymd(date);
+    const pat = this.PATTERN[this.wd(date)] || [];
+    const base = pat.map((p,i) => ({ id: key+'-m'+i, dateKey: key, start: p[0], duration: p[1], type: p[2]==='block'?'block':'booked' }));
+    const mine = this.state.bookings.filter(b => b.dateKey === key && !b.demo);
+    return base.concat(mine);
+  }
+
+  overlaps(date, start, dur) {
+    const end = start + dur;
+    return this.bookingsFor(date).some(b => start < b.start + b.duration && end > b.start);
+  }
+
+  // ---------- navigation ----------
+  go = (n) => {
+    const v = this.state.view;
+    if (v === 'month') { const a = new Date(this.state.anchor); a.setMonth(a.getMonth()+n); this.setState({ anchor: a }); }
+    else { this.setState({ anchor: this.addDays(this.state.anchor, v==='day' ? n : n*7) }); }
+  };
+
+  // ---------- interaction ----------
+  snapAt(e, date) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    let m = this.DAY_START + Math.round((y / this.HOUR_PX * 60) / 15) * 15;
+    if (m < this.DAY_START) m = this.DAY_START;
+    if (m > this.DAY_END - 30) m = this.DAY_END - 30;
+    return m;
+  }
+
+  handleColClick = (e, date) => {
+    if (this.isPast(date)) return;
+    const clicked = this.snapAt(e, date);
+    let dur = 60;
+    let mins = clicked - Math.round((Math.min(dur, this.DAY_END - clicked) / 2) / 15) * 15;
+    if (mins < this.DAY_START) mins = this.DAY_START;
+    if (mins > this.DAY_END - 30) mins = this.DAY_END - 30;
+    if (mins + dur > this.DAY_END) dur = Math.max(30, this.DAY_END - mins);
+    this.setState({ hover: null, dialog: {
+      open: true, date: new Date(date), dateKey: this.ymd(date),
+      startMins: mins, duration: dur,
+      name: '', email: '', message: '',
+      x: e.clientX, y: e.clientY
+    }});
+  };
+
+  handleColHover = (e, date) => {
+    if (this.isPast(date) || this.state.dialog.open) return;
+    const mins = this.snapAt(e, date);
+    const key = this.ymd(date);
+    const h = this.state.hover;
+    if (!h || h.key !== key || h.mins !== mins) this.setState({ hover: { key, mins } });
+  };
+  clearHover = () => { if (this.state.hover) this.setState({ hover: null }); };
+
+  closeDialog = () => this.setState({ dialog: { open: false } });
+
+  setField = (k, v) => {
+    const d = Object.assign({}, this.state.dialog, { [k]: v });
+    if (k === 'startMins') {
+      if (d.startMins + d.duration > this.DAY_END) d.duration = this.DAY_END - d.startMins;
+    }
+    this.setState({ dialog: d });
+  };
+
+  confirmBooking = () => {
+    const d = this.state.dialog;
+    const b = { id: 'b'+Date.now(), dateKey: d.dateKey, start: d.startMins, duration: d.duration,
+                type: 'requested', status: 'pending', name: d.name, email: d.email, message: d.message };
+    this.setState({ bookings: this.state.bookings.concat(b), dialog: { open: false } });
+  };
+
+  setStatus = (id, status) => {
+    this.setState({ bookings: this.state.bookings.map(b => b.id === id ? Object.assign({}, b, { status }) : b) });
+  };
+
+  goLogin = () => this.setState({ page: 'login', loginForm: { username: '', password: '' } });
+  goBooking = () => this.setState({ page: 'booking' });
+  logout = () => this.setState({ page: 'booking', loginForm: { username: '', password: '' } });
+  setLoginField = (k, v) => this.setState({ loginForm: Object.assign({}, this.state.loginForm, { [k]: v }) });
+  submitLogin = (e) => {
+    e.preventDefault();
+    if (this.state.loginForm.username.trim() && this.state.loginForm.password) this.setState({ page: 'dashboard' });
+  };
+  setDashboardFilter = (f) => this.setState({ dashboardFilter: f });
+
+  // ---------- event block ----------
+  renderEvent(it) {
+    const h = React.createElement;
+    const top = (it.start - this.DAY_START) / 60 * this.HOUR_PX;
+    const height = Math.max(it.duration / 60 * this.HOUR_PX - 3, 17);
+    const themes = {
+      booked:    { background: 'rgba(17,17,17,0.06)', borderLeft: '3px solid var(--color-ink)', color: 'var(--color-ink)' },
+      requested: { background: 'rgba(0,0,255,0.09)', borderLeft: '3px solid var(--color-blue)', color: 'var(--color-blue)' },
+      block:     { borderLeft: '3px solid var(--color-gray-dim)', color: 'var(--color-gray)',
+                   backgroundImage: 'repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(17,17,17,0.06) 5px,rgba(17,17,17,0.06) 6px)' }
+    };
+    const title = it.type === 'booked' ? 'Booked' : it.type === 'block' ? 'Unavailable' : (it.lesson || 'Requested');
+    const showTime = it.type !== 'block' && height > 26;
+    return h('div', { key: it.id, onClick: (e)=>e.stopPropagation(), onMouseDown: (e)=>e.stopPropagation(),
+      style: Object.assign({ position:'absolute', top, left:3, right:3, height, boxSizing:'border-box',
+        padding:'4px 8px', overflow:'hidden', cursor:'default' }, themes[it.type] || themes.booked) },
+      h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11.5px', lineHeight:1.15, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' } }, title),
+      showTime ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'10px', marginTop:'2px', opacity:0.75 } }, this.fmtHM(it.start)+'–'+this.fmtHM(it.start+it.duration)) : null
+    );
+  }
+
+  renderGhost(mins) {
+    const h = React.createElement;
+    const dur0 = Math.min(60, this.DAY_END - mins);
+    let startMins = mins - Math.round((dur0 / 2) / 15) * 15;
+    if (startMins < this.DAY_START) startMins = this.DAY_START;
+    if (startMins > this.DAY_END - 30) startMins = this.DAY_END - 30;
+    mins = startMins;
+    const top = (mins - this.DAY_START) / 60 * this.HOUR_PX;
+    const dur = Math.min(60, this.DAY_END - mins);
+    const height = dur / 60 * this.HOUR_PX - 3;
+    return h('div', { key:'ghost', style: { position:'absolute', top, left:3, right:3, height, boxSizing:'border-box',
+      border:'1px dashed var(--color-blue)', background:'rgba(0,0,255,0.045)', pointerEvents:'none', padding:'4px 8px' } },
+      h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'10px', color:'var(--color-blue)' } }, this.fmtHM(mins)));
+  }
+
+  renderColumn(date, key) {
+    const h = React.createElement;
+    const past = this.isPast(date);
+    const cells = [];
+    for (let hh = this.DAY_START/60; hh < this.DAY_END/60; hh++) {
+      cells.push(h('div', { key:hh, style: { height:this.HOUR_PX, borderTop:'1px solid var(--color-border)' } }));
+    }
+    const events = this.bookingsFor(date).map(it => this.renderEvent(it));
+    const hov = this.state.hover;
+    const ghost = (hov && hov.key === this.ymd(date) && !past && !this.state.dialog.open) ? this.renderGhost(hov.mins) : null;
+    return h('div', { key, onClick: (e)=>this.handleColClick(e,date), onMouseMove: (e)=>this.handleColHover(e,date), onMouseLeave: this.clearHover,
+      style: { position:'relative', flex:'1 1 0', minWidth:0, height:this.totalPx(),
+        borderLeft:'1px solid var(--color-border)', cursor: past?'default':'pointer',
+        background: past ? 'rgba(17,17,17,0.025)' : 'transparent' } },
+      cells, ghost, events);
+  }
+
+  gutter() {
+    const h = React.createElement;
+    const labels = [];
+    for (let hh = this.DAY_START/60; hh < this.DAY_END/60; hh++) {
+      labels.push(h('div', { key:hh, style: { height:this.HOUR_PX, position:'relative' } },
+        h('span', { style: { position:'absolute', top:'-7px', right:'9px', fontFamily:'var(--font-mono)', fontSize:'10px', color:'var(--color-gray-dim)' } }, this.fmtHM(hh*60))));
+    }
+    return h('div', { style: { flex:'0 0 56px', width:'56px' } }, labels);
+  }
+
+  // ---------- views ----------
+  renderWeek() {
+    const h = React.createElement;
+    const days = this.viewDays();
+    const today = this.todayMid();
+    const headers = days.map((d,i) => {
+      const isT = this.isSameDay(d, today);
+      return h('div', { key:i, style: { flex:'1 1 0', minWidth:0, textAlign:'center', padding:'9px 4px',
+        borderLeft: i===0 ? 'none' : '1px solid var(--color-border)' } },
+        h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11px', letterSpacing:'1px', textTransform:'uppercase', color: isT?'var(--color-blue)':'var(--color-gray)' } }, this.GIORNI[this.wd(d)]),
+        h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'21px', marginTop:'3px', letterSpacing:'-0.5px', color: isT?'var(--color-blue)':'var(--color-ink)' } }, d.getDate()));
+    });
+    return h('div', { className:'bk-scroll', style: { border:'1px solid var(--color-border)', maxHeight:'620px', overflowY:'auto', background:'var(--color-bg)' } },
+      h('div', { style: { display:'flex', position:'sticky', top:0, zIndex:2, background:'var(--color-bg)', borderBottom:'1px solid var(--color-ink)' } },
+        h('div', { style: { flex:'0 0 56px', width:'56px' } }), headers),
+      h('div', { style: { display:'flex', paddingTop:'10px' } },
+        this.gutter(), days.map((d,i) => this.renderColumn(d, 'c'+i))));
+  }
+
+  renderDay() {
+    const h = React.createElement;
+    const d = this.state.anchor;
+    const isT = this.isSameDay(d, this.todayMid());
+    return h('div', { className:'bk-scroll', style: { border:'1px solid var(--color-border)', maxHeight:'620px', overflowY:'auto', background:'var(--color-bg)' } },
+      h('div', { style: { display:'flex', position:'sticky', top:0, zIndex:2, background:'var(--color-bg)', borderBottom:'1px solid var(--color-ink)' } },
+        h('div', { style: { flex:'0 0 56px', width:'56px' } }),
+        h('div', { style: { flex:'1 1 0', padding:'10px 16px' } },
+          h('span', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'17px', letterSpacing:'-0.3px', color: isT?'var(--color-blue)':'var(--color-ink)' } }, this.GIORNI_FULL[this.wd(d)]),
+          h('span', { style: { fontFamily:'var(--font-mono)', fontSize:'12px', marginLeft:'10px', color:'var(--color-gray)' } }, d.getDate()+' '+this.MESI[d.getMonth()]))),
+      h('div', { style: { display:'flex', paddingTop:'10px' } }, this.gutter(), this.renderColumn(d, 'day')));
+  }
+
+  renderMonth() {
+    const h = React.createElement;
+    const a = this.state.anchor;
+    const first = new Date(a.getFullYear(), a.getMonth(), 1);
+    const start = this.weekStartOf(first);
+    const today = this.todayMid();
+    const headRow = h('div', { style: { display:'flex', borderBottom:'1px solid var(--color-ink)' } },
+      this.GIORNI.map((g,i) => h('div', { key:i, style: { flex:'1 1 0', textAlign:'center', padding:'9px 0',
+        fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11px', letterSpacing:'1px', textTransform:'uppercase', color:'var(--color-gray)',
+        borderLeft: i===0?'none':'1px solid var(--color-border)' } }, g)));
+    const weeks = [];
+    for (let w=0; w<6; w++) {
+      const cells = [];
+      for (let i=0; i<7; i++) {
+        const date = this.addDays(start, w*7 + i);
+        const inMonth = date.getMonth() === a.getMonth();
+        const past = this.isPast(date);
+        const isT = this.isSameDay(date, today);
+        const items = this.bookingsFor(date).filter(x => x.type !== 'block');
+        const blocked = this.bookingsFor(date).some(x => x.type === 'block' && x.duration > 600);
+        const bars = items.slice(0,3).map((it,k) => h('div', { key:k, style: {
+          fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.3px', padding:'1px 4px', marginTop:'2px',
+          whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
+          borderLeft: '2px solid ' + (it.type==='requested'?'var(--color-blue)':'var(--color-ink)'),
+          background: it.type==='requested'?'rgba(0,0,255,0.08)':'rgba(17,17,17,0.05)',
+          color: it.type==='requested'?'var(--color-blue)':'var(--color-ink)'
+        } }, this.fmtHM(it.start)+' '+(it.type==='requested'?(it.lesson||'Req'):'Booked')));
+        const more = items.length > 3 ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'9.5px', color:'var(--color-gray)', marginTop:'2px', paddingLeft:'4px' } }, '+'+(items.length-3)) : null;
+        cells.push(h('div', { key:i,
+          onClick: (!past && inMonth) ? (()=>this.setState({ view:'day', anchor:new Date(date) })) : undefined,
+          style: { flex:'1 1 0', minWidth:0, height:'104px', padding:'6px 6px 8px', overflow:'hidden',
+            borderLeft: i===0?'none':'1px solid var(--color-border)', borderTop:'1px solid var(--color-border)',
+            cursor: (!past && inMonth)?'pointer':'default',
+            background: !inMonth ? 'rgba(17,17,17,0.02)' : past ? 'rgba(17,17,17,0.015)' : 'transparent',
+            opacity: inMonth ? 1 : 0.45 } },
+          h('div', { style: { fontFamily:'var(--font-sans)', fontWeight: isT?700:500, fontSize:'13px',
+            color: isT?'var(--color-blue)':'var(--color-ink)', marginBottom:'2px' } }, date.getDate()),
+          blocked ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'9.5px', color:'var(--color-gray-dim)', textTransform:'uppercase', letterSpacing:'0.5px' } }, 'Closed') : null,
+          bars, more));
+      }
+      weeks.push(h('div', { key:w, style: { display:'flex' } }, cells));
+    }
+    return h('div', { style: { border:'1px solid var(--color-border)', background:'var(--color-bg)' } }, headRow, weeks);
+  }
+
+  renderLoginPage() {
+    const h = React.createElement;
+    const lf = this.state.loginForm;
+    const valid = lf.username.trim().length > 0 && lf.password.length > 0;
+    return h('div', { style: { minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', padding:'24px' } },
+      h('form', { onSubmit:this.submitLogin, style: { width:'360px', maxWidth:'100%', background:'var(--color-bg)', border:'1px solid var(--color-ink)', padding:'28px 26px 24px' } },
+        h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'1.2px', textTransform:'uppercase', color:'var(--color-blue)', marginBottom:'10px' } }, 'Teacher Login'),
+        h('h1', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'24px', letterSpacing:'-0.5px', color:'var(--color-ink)', margin:'0 0 22px' } }, 'Admin Dashboard'),
+        this.field('Username', h('input', { type:'text', autoComplete:'username', value:lf.username, onChange:(e)=>this.setLoginField('username', e.target.value), style:this.inputStyle() })),
+        this.field('Password', h('input', { type:'password', autoComplete:'current-password', value:lf.password, onChange:(e)=>this.setLoginField('password', e.target.value), style:this.inputStyle() })),
+        h('button', { type:'submit', disabled: !valid,
+          style: { width:'100%', border:'1px solid var(--color-blue)', borderRadius:'100px', background:'var(--color-blue)', color:'var(--color-bg)',
+            fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'13px', letterSpacing:'1px', textTransform:'uppercase', padding:'11px 0', cursor: valid?'pointer':'not-allowed', marginTop:'6px', opacity: valid?1:0.4 } }, 'Sign in'),
+        h('button', { type:'button', onClick:this.goBooking, style: { width:'100%', border:'none', background:'transparent', fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11px', letterSpacing:'1px', textTransform:'uppercase', color:'var(--color-gray)', cursor:'pointer', padding:'14px 0 0' } }, '← Back to booking')
+      )
+    );
+  }
+
+  renderDashboardPage() {
+    const h = React.createElement;
+    const filter = this.state.dashboardFilter;
+    const all = this.state.bookings.filter(b => b.type === 'requested');
+    const list = filter === 'all' ? all : all.filter(b => b.status === filter);
+    const tabs = [['all','All'],['pending','Pending'],['confirmed','Confirmed'],['declined','Declined']];
+    const tabBtns = tabs.map(t => h('button', { key:t[0], onClick: ()=>this.setDashboardFilter(t[0]),
+      style: { fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'1px', textTransform:'uppercase',
+        padding:'9px 16px', border:'none', cursor:'pointer', background: filter===t[0]?'var(--color-ink)':'transparent', color: filter===t[0]?'var(--color-bg)':'var(--color-ink)' } }, t[1]));
+
+    const badgeStyle = (status) => {
+      const base = { fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'1px', textTransform:'uppercase', padding:'4px 8px' };
+      if (status === 'pending') return Object.assign({}, base, { color:'var(--color-blue)', border:'1px solid var(--color-blue)' });
+      if (status === 'confirmed') return Object.assign({}, base, { color:'var(--color-ink)', border:'1px solid var(--color-ink)' });
+      return Object.assign({}, base, { color:'var(--color-gray)', border:'1px solid var(--color-border)' });
+    };
+
+    const rows = list.map(b => {
+      const date = this.parseYmd(b.dateKey);
+      const when = this.GIORNI_FULL[this.wd(date)] + ' ' + date.getDate() + ' ' + this.MESI[date.getMonth()] + ', ' + this.fmtHM(b.start) + ' · ' + b.duration + ' min';
+      const pending = b.status === 'pending';
+      return h('li', { key:b.id, style: { display:'flex', justifyContent:'space-between', gap:'20px', padding:'18px 0', borderBottom:'1px solid var(--color-border)' } },
+        h('div', { style: { flex:'1 1 auto', minWidth:0 } },
+          h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'16px', color:'var(--color-ink)' } }, b.name || 'Unnamed'),
+          h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'12px', color:'var(--color-gray)', marginTop:'2px' } }, b.email || ''),
+          h('div', { style: { fontFamily:'var(--font-sans)', fontSize:'13px', color:'var(--color-ink)', marginTop:'8px' } }, when),
+          b.message ? h('div', { style: { fontFamily:'var(--font-serif)', fontStyle:'italic', fontSize:'14px', color:'var(--color-gray)', marginTop:'6px' } }, b.message) : null),
+        h('div', { style: { flex:'0 0 auto', display:'flex', flexDirection:'column', alignItems:'flex-end', gap:'10px' } },
+          h('span', { style: badgeStyle(b.status) }, b.status.toUpperCase()),
+          h('div', { style: { display:'flex', gap:'8px' } },
+            h('button', { disabled: !pending, onClick: pending ? ()=>this.setStatus(b.id,'declined') : undefined,
+              style: { padding:'8px 14px', fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11px', letterSpacing:'0.8px', textTransform:'uppercase',
+                cursor: pending?'pointer':'not-allowed', borderRadius:'100px', whiteSpace:'nowrap', border:'1px solid var(--color-border)', background:'transparent', color:'var(--color-ink)', opacity: pending?1:0.4 } }, 'Decline'),
+            h('button', { disabled: !pending, onClick: pending ? ()=>this.setStatus(b.id,'confirmed') : undefined,
+              style: { padding:'8px 14px', fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'11px', letterSpacing:'0.8px', textTransform:'uppercase',
+                cursor: pending?'pointer':'not-allowed', borderRadius:'100px', whiteSpace:'nowrap', border:'1px solid var(--color-blue)', background:'var(--color-blue)', color:'var(--color-bg)', opacity: pending?1:0.4 } }, 'Confirm'))));
+    });
+
+    return h('div', { style: { maxWidth:'760px', margin:'0 auto', padding:'44px 32px 72px' } },
+      h('div', { style: { display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'32px', gap:'20px', flexWrap:'wrap' } },
+        h('div', null,
+          h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'13px', letterSpacing:'1.2px', textTransform:'uppercase', color:'var(--color-blue)', marginBottom:'10px', whiteSpace:'nowrap' } }, 'Teacher Dashboard'),
+          h('h1', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'34px', letterSpacing:'-1px', color:'var(--color-ink)', margin:0 } }, 'Bookings')),
+        h('button', { onClick:this.logout, style: { border:'none', background:'transparent', fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'1px', textTransform:'uppercase', color:'var(--color-gray)', cursor:'pointer', padding:'8px 0' } }, 'Log out')),
+      h('div', { style: { display:'inline-flex', border:'1px solid var(--color-ink)', marginBottom:'24px' } }, tabBtns),
+      list.length === 0 ? h('div', { style: { fontFamily:'var(--font-serif)', fontStyle:'italic', fontSize:'16px', color:'var(--color-gray)', padding:'8px 0' } }, 'No bookings in this view.') :
+        h('ul', { style: { listStyle:'none', margin:0, padding:0, borderTop:'1px solid var(--color-border)' } }, rows)
+    );
+  }
+
+  renderCalendar() {
+    if (this.state.view === 'day') return this.renderDay();
+    if (this.state.view === 'month') return this.renderMonth();
+    return this.renderWeek();
+  }
+
+  // ---------- dialog ----------
+  field(label, control) {
+    const h = React.createElement;
+    return h('label', { style: { display:'block', marginBottom:'14px' } },
+      h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'1px', textTransform:'uppercase', color:'var(--color-gray)', marginBottom:'6px' } }, label),
+      control);
+  }
+
+  inputStyle() {
+    return { width:'100%', padding:'9px 11px', border:'1px solid var(--color-border)', borderRadius:0,
+      background:'var(--color-bg)', fontFamily:'var(--font-sans)', fontSize:'14px', color:'var(--color-ink)', boxSizing:'border-box' };
+  }
+
+  renderDialog() {
+    const d = this.state.dialog;
+    if (!d.open) return null;
+    const h = React.createElement;
+    const modal = this.props.dialogStyle === 'modal';
+
+    // start time options
+    const startOpts = [];
+    for (let m = this.DAY_START; m <= this.DAY_END - 30; m += 15) {
+      startOpts.push(h('option', { key:m, value:m }, this.fmtHM(m)));
+    }
+    const durList = [30,45,60,90];
+    const durBtns = durList.map(mn => {
+      const fits = d.startMins + mn <= this.DAY_END;
+      const on = d.duration === mn;
+      return h('button', { key:mn, disabled: !fits, onClick: ()=>fits && this.setField('duration', mn),
+        style: { flex:'1 1 0', padding:'9px 0', border:'1px solid '+(on?'var(--color-ink)':'var(--color-border)'),
+          marginLeft: mn===30?0:'-1px', background: on?'var(--color-ink)':'transparent', color: on?'var(--color-bg)':(fits?'var(--color-ink)':'var(--color-gray-dim)'),
+          fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'0.5px', cursor: fits?'pointer':'not-allowed' } }, mn+' min');
+    });
+
+    const conflict = this.overlaps(d.date, d.startMins, d.duration);
+    const valid = d.name.trim().length > 0 && /\S+@\S+/.test(d.email) && !conflict && (d.startMins + d.duration <= this.DAY_END);
+    const endM = d.startMins + d.duration;
+
+    const card = h('div', { onClick:(e)=>e.stopPropagation(),
+      style: { width: modal?'440px':'360px', maxWidth:'calc(100vw - 24px)', maxHeight:'calc(100vh - 24px)', overflowY:'auto', background:'var(--color-bg)',
+        border:'1px solid var(--color-ink)', padding:'22px 22px 20px', animation:'bkpop 0.16s cubic-bezier(0.16,1,0.3,1)' } },
+      // header
+      h('div', { style: { display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'4px' } },
+        h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'18px', letterSpacing:'-0.3px', color:'var(--color-ink)' } }, 'Request a lesson'),
+        h('button', { onClick:this.closeDialog, 'aria-label':'Close', style: { border:'none', background:'transparent', fontSize:'20px', lineHeight:1, cursor:'pointer', color:'var(--color-gray)', padding:0, marginTop:'-2px' } }, '×')),
+      h('div', { style: { fontFamily:'var(--font-serif)', fontStyle:'italic', fontSize:'15px', color:'var(--color-gray)', marginBottom:'18px' } },
+        this.GIORNI_FULL[this.wd(d.date)] + ' ' + d.date.getDate() + ' ' + this.MESI[d.date.getMonth()] + ' · ' + this.fmtHM(d.startMins) + '–' + this.fmtHM(endM)),
+
+      // time + duration row
+      h('div', { style: { display:'flex', gap:'12px', marginBottom:'14px' } },
+        h('div', { style: { flex:'0 0 120px' } }, this.field('Start',
+          h('select', { className:'bk-in', value:d.startMins, onChange:(e)=>this.setField('startMins', parseInt(e.target.value,10)), style:this.inputStyle() }, startOpts))),
+        h('div', { style: { flex:'1 1 0' } }, this.field('Duration',
+          h('div', { style: { display:'flex' } }, durBtns)))),
+
+      h('div', { style: { display:'flex', gap:'12px' } },
+        h('div', { style:{ flex:'1 1 0' } }, this.field('Name',
+          h('input', { className:'bk-in', value:d.name, placeholder:'Your name', onChange:(e)=>this.setField('name', e.target.value), style:this.inputStyle() }))),
+        h('div', { style:{ flex:'1 1 0' } }, this.field('Email',
+          h('input', { className:'bk-in', type:'email', value:d.email, placeholder:'you@email.com', onChange:(e)=>this.setField('email', e.target.value), style:this.inputStyle() })))),
+
+      this.field('Message — optional',
+        h('textarea', { className:'bk-in', value:d.message, rows:2, placeholder:'Anything I should know? Level, goals, focus…',
+          onChange:(e)=>this.setField('message', e.target.value), style: Object.assign(this.inputStyle(), { resize:'vertical', fontFamily:'var(--font-serif)', lineHeight:1.5 }) })),
+
+      conflict ? h('div', { style: { fontFamily:'var(--font-mono)', fontSize:'11px', color:'var(--color-blue)', marginBottom:'12px', letterSpacing:'0.3px' } }, '⚠ This time overlaps an existing lesson. Pick another.') : null,
+
+      h('div', { style: { display:'flex', alignItems:'center', justifyContent:'flex-end', gap:'14px', marginTop:'6px' } },
+        h('button', { onClick:this.closeDialog, style: { border:'none', background:'transparent', fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'13px', letterSpacing:'1px', textTransform:'uppercase', color:'var(--color-ink)', cursor:'pointer', padding:'10px 4px' } }, 'Cancel'),
+        h('button', { onClick: valid ? this.confirmBooking : undefined, disabled: !valid,
+          style: { border:'1px solid var(--color-blue)', borderRadius:'100px', background:'var(--color-blue)', color:'var(--color-bg)',
+            fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'13px', letterSpacing:'1px', textTransform:'uppercase',
+            padding:'11px 22px', cursor: valid?'pointer':'not-allowed', opacity: valid?1:0.4 } }, 'Request slot'))
+    );
+
+    if (modal) {
+      return h('div', { onClick:this.closeDialog, style: { position:'fixed', inset:0, zIndex:1000, background:'rgba(17,17,17,0.28)', display:'flex', alignItems:'center', justifyContent:'center', padding:'12px' } }, card);
+    }
+    const vw = (typeof window !== 'undefined' ? window.innerWidth : 1200);
+    const vh = (typeof window !== 'undefined' ? window.innerHeight : 800);
+    const ch = Math.min(560, vh - 24);
+    const left = Math.max(12, Math.min(d.x + 10, vw - 372));
+    const top  = Math.max(12, Math.min(d.y, vh - 12 - ch));
+    return h('div', null,
+      h('div', { onClick:this.closeDialog, style: { position:'fixed', inset:0, zIndex:999 } }),
+      h('div', { style: { position:'fixed', left, top, zIndex:1000 } }, card));
+  }
+
+  renderVals() {
+    const v = this.state.view;
+    const seg = (on) => ({ fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'1px',
+      textTransform:'uppercase', padding:'9px 16px', border:'none', cursor:'pointer',
+      background: on ? 'var(--color-ink)' : 'transparent', color: on ? 'var(--color-bg)' : 'var(--color-ink)' });
+
+    const a = this.state.anchor;
+    let rangeLabel;
+    if (v === 'month') {
+      rangeLabel = this.MESI[a.getMonth()].charAt(0).toUpperCase() + this.MESI[a.getMonth()].slice(1) + ' ' + a.getFullYear();
+    } else if (v === 'day') {
+      rangeLabel = a.getDate() + ' ' + this.MESI[a.getMonth()] + ' ' + a.getFullYear();
+    } else {
+      const days = this.viewDays();
+      const s = days[0], e = days[days.length-1];
+      if (s.getMonth() === e.getMonth()) rangeLabel = s.getDate() + ' – ' + e.getDate() + ' ' + this.MESI[s.getMonth()] + ' ' + s.getFullYear();
+      else rangeLabel = s.getDate() + ' ' + this.MESI[s.getMonth()].slice(0,3) + ' – ' + e.getDate() + ' ' + this.MESI[e.getMonth()].slice(0,3) + ' ' + e.getFullYear();
+    }
+
+    return {
+      teacherName: this.props.teacherName || 'Flavia Buzzi',
+      rangeLabel,
+      isBooking: this.state.page === 'booking',
+      isLogin: this.state.page === 'login',
+      isDashboard: this.state.page === 'dashboard',
+      goLogin: this.goLogin,
+      goBooking: this.goBooking,
+      goDashboard: () => this.setState({ page: 'dashboard' }),
+      navBookingStyle: Object.assign(seg(this.state.page === 'booking'), { padding: '8px 12px', fontSize: '11px' }),
+      navLoginStyle: Object.assign(seg(this.state.page === 'login'), { padding: '8px 12px', fontSize: '11px' }),
+      navDashStyle: Object.assign(seg(this.state.page === 'dashboard'), { padding: '8px 12px', fontSize: '11px' }),
+      loginPage: this.state.page === 'login' ? this.renderLoginPage() : null,
+      dashboardPage: this.state.page === 'dashboard' ? this.renderDashboardPage() : null,
+      goToday: () => this.setState({ anchor: this.todayMid() }),
+      goPrev: () => this.go(-1),
+      goNext: () => this.go(1),
+      setWeek: () => this.setState({ view: 'week' }),
+      setDay: () => this.setState({ view: 'day' }),
+      setMonth: () => this.setState({ view: 'month' }),
+      wkStyle: seg(v === 'week'),
+      dyStyle: seg(v === 'day'),
+      moStyle: seg(v === 'month'),
+      calendarView: this.renderCalendar(),
+      dialog: this.renderDialog()
+    };
+  }
+}
+</script>
+</body>
+</html>

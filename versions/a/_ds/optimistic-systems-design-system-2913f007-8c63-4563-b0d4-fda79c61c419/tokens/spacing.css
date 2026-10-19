@@ -1,0 +1,46 @@
+/* ============================================================
+   SPACING, LAYOUT & FORM — Optimistic Systems
+   Negative space is intentional. The page breathes; density is
+   reserved for the graph. Generous vertical rhythm, a narrow
+   reading measure, near-zero ornament.
+   ============================================================ */
+
+:root {
+  /* --- Spacing scale (4px base, expanding to editorial whitespace) --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  28px;
+  --space-7:  32px;
+  --space-8:  48px;
+  --space-9:  80px;
+  --space-10: 120px; /* section breathing room */
+  --space-11: 160px;
+
+  /* --- Layout measures --- */
+  --measure-prose:  750px;  /* reading column (work, about) */
+  --measure-narrow: 650px;
+  --page-pad-x:     24px;
+  --page-pad-x-lg:  8vw;    /* hero indent */
+  --section-pad-y:  120px;
+
+  /* --- Borders --- */
+  --border-width: 1px;          /* hairline only — never heavier */
+  --border-hairline: 1px solid var(--rule);
+
+  /* --- Radii --- */
+  --radius-none: 0;       /* default: editorial, square */
+  --radius-sm:   2px;
+  --radius-pill: 100px;   /* the CTA pill is the one rounded form */
+
+  /* --- Elevation --- */
+  --shadow-none: none;    /* the system has no shadows, by design */
+
+  /* --- Motion: see tokens/animation.css --- */
+}
+
+/* The system is deliberately flat: no cards, no shadows, no
+   gradients. "Surfaces" are defined by hairline rules and
+   whitespace, not by elevation. */

@@ -1,0 +1,13 @@
+:root{
+  --text-xs:13px;
+  --text-sm:16px;
+  --text-md:20px;
+  --text-lg:32px;
+  --text-xl:48px;
+  --leading-tight:1.15;
+  --leading-body:1.6;
+  --tracking-caps:.08em;
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+}

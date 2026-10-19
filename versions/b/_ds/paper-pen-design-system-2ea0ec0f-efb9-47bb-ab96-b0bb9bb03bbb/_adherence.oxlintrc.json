@@ -1,0 +1,250 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/calendar/**",
+              "components/feedback/**",
+              "components/forms/**",
+              "components/surfaces/**",
+              "ui_kits/booking-app/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Instrument Serif|Fraunces|Newsreader|JetBrains Mono|IBM Plex Mono|Space Mono))/i]",
+        "message": "Font not provided by the design system. Available: Instrument Serif, Fraunces, Newsreader, JetBrains Mono, IBM Plex Mono, Space Mono."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|tone|size|disabled|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, tone, size, disabled, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|secondary)$/]",
+        "message": "<Button> variant must be one of 'primary' | 'secondary'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='tone'] > Literal[value!=/^(?:ink|blue|red|green)$/]",
+        "message": "<Button> tone must be one of 'ink' | 'blue' | 'red' | 'green'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md)$/]",
+        "message": "<Button> size must be one of 'sm' | 'md'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CalendarSlot'] > JSXAttribute > JSXIdentifier[name!=/^(?:state|time|today|onClick|key|ref|className|style|children)$/]",
+        "message": "<CalendarSlot> doesn't accept that prop. Declared props: state, time, today, onClick."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CalendarSlot'] > JSXAttribute[name.name='state'] > Literal[value!=/^(?:open|booked|unavailable)$/]",
+        "message": "<CalendarSlot> state must be one of 'open' | 'booked' | 'unavailable'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Card'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|style|key|ref|className|style|children)$/]",
+        "message": "<Card> doesn't accept that prop. Declared props: children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Input'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|placeholder|type|key|ref|className|style|children)$/]",
+        "message": "<Input> doesn't accept that prop. Declared props: label, placeholder, type."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='StatusTag'] > JSXAttribute > JSXIdentifier[name!=/^(?:status|children|key|ref|className|style|children)$/]",
+        "message": "<StatusTag> doesn't accept that prop. Declared props: status, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='StatusTag'] > JSXAttribute[name.name='status'] > Literal[value!=/^(?:pending|confirmed|declined)$/]",
+        "message": "<StatusTag> status must be one of 'pending' | 'confirmed' | 'declined'."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Button": {
+        "replaces": []
+      },
+      "CalendarSlot": {
+        "replaces": []
+      },
+      "Card": {
+        "replaces": []
+      },
+      "Input": {
+        "replaces": []
+      },
+      "Legend": {
+        "replaces": []
+      },
+      "StatusTag": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--blue",
+      "--blue-10",
+      "--border-default",
+      "--border-strong",
+      "--border-width",
+      "--font-display",
+      "--font-display-bookish",
+      "--font-display-gentle",
+      "--font-display-graphic",
+      "--font-mono",
+      "--font-mono-bookish",
+      "--font-mono-gentle",
+      "--font-mono-graphic",
+      "--green",
+      "--green-10",
+      "--hatch-unavailable",
+      "--ink",
+      "--ink-08",
+      "--ink-15",
+      "--ink-40",
+      "--ink-60",
+      "--leading-body",
+      "--leading-tight",
+      "--muted",
+      "--paper",
+      "--paper-raised",
+      "--radius-card",
+      "--radius-sm",
+      "--red",
+      "--red-10",
+      "--space-1",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-6",
+      "--state-booked",
+      "--state-booked-accent",
+      "--state-today",
+      "--status-confirmed",
+      "--status-confirmed-bg",
+      "--status-declined",
+      "--status-declined-bg",
+      "--status-pending",
+      "--status-pending-bg",
+      "--surface-card",
+      "--surface-page",
+      "--text-ink",
+      "--text-lg",
+      "--text-link",
+      "--text-md",
+      "--text-muted",
+      "--text-on-primary",
+      "--text-sm",
+      "--text-xl",
+      "--text-xs",
+      "--tracking-caps",
+      "--weight-medium",
+      "--weight-regular",
+      "--weight-semibold",
+      "--white"
+    ],
+    "tokenKinds": {
+      "--font-display-graphic": "font",
+      "--font-mono-graphic": "font",
+      "--font-display-bookish": "font",
+      "--font-mono-bookish": "font",
+      "--font-display-gentle": "font",
+      "--font-mono-gentle": "font",
+      "--font-display": "font",
+      "--font-mono": "font",
+      "--ink": "color",
+      "--ink-60": "color",
+      "--ink-40": "color",
+      "--ink-15": "color",
+      "--ink-08": "color",
+      "--blue": "color",
+      "--blue-10": "color",
+      "--red": "color",
+      "--red-10": "color",
+      "--green": "color",
+      "--green-10": "color",
+      "--muted": "color",
+      "--paper": "color",
+      "--paper-raised": "color",
+      "--white": "color",
+      "--text-ink": "font",
+      "--text-muted": "font",
+      "--text-on-primary": "font",
+      "--text-link": "font",
+      "--border-default": "color",
+      "--border-strong": "color",
+      "--surface-page": "color",
+      "--surface-card": "color",
+      "--status-confirmed": "color",
+      "--status-confirmed-bg": "color",
+      "--status-pending": "color",
+      "--status-pending-bg": "color",
+      "--status-declined": "color",
+      "--status-declined-bg": "color",
+      "--state-today": "color",
+      "--state-booked": "color",
+      "--state-booked-accent": "color",
+      "--text-xs": "font",
+      "--text-sm": "font",
+      "--text-md": "font",
+      "--text-lg": "font",
+      "--text-xl": "font",
+      "--leading-tight": "font",
+      "--leading-body": "font",
+      "--tracking-caps": "font",
+      "--weight-regular": "font",
+      "--weight-medium": "font",
+      "--weight-semibold": "font",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-6": "spacing",
+      "--radius-sm": "radius",
+      "--radius-card": "radius",
+      "--border-width": "spacing",
+      "--hatch-unavailable": "color"
+    },
+    "fontFamilies": [
+      "Fraunces",
+      "IBM Plex Mono",
+      "Instrument Serif",
+      "JetBrains Mono",
+      "Newsreader",
+      "Space Mono"
+    ]
+  }
+}

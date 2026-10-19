@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/tokens/texture.css">
+  <link rel="stylesheet" href="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/styles.css">
+  <script src="_ds/paper-pen-design-system-2ea0ec0f-efb9-47bb-ab96-b0bb9bb03bbb/_ds_bundle.js"></script>
+  <style>
+    body{margin:0}
+    a{color:var(--blue)}
+    a:hover{color:var(--ink)}
+    select{font-family:var(--font-mono)}
+  @media (max-width: 640px) { .page-nav { position: static !important; width: max-content; margin: 12px 12px 0 auto; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--paper);font-family:var(--font-mono);color:var(--ink);position:relative;">
+
+  <div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:flex;gap:4px;background:var(--paper-raised);border:1px solid var(--ink-15);border-radius:6px;padding:4px;">
+    <sc-if value="{{ navBookingOn }}"><button onClick="{{ goBooking }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid var(--blue);background:var(--blue);color:var(--paper);cursor:pointer;">Student</button></sc-if>
+    <sc-if value="{{ navBookingOff }}"><button onClick="{{ goBooking }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Student</button></sc-if>
+    <sc-if value="{{ navLoginOn }}"><button onClick="{{ goLogin }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid var(--blue);background:var(--blue);color:var(--paper);cursor:pointer;">Teacher Login</button></sc-if>
+    <sc-if value="{{ navLoginOff }}"><button onClick="{{ goLogin }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Teacher Login</button></sc-if>
+    <sc-if value="{{ navDashOn }}"><button onClick="{{ goDashboard }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid var(--blue);background:var(--blue);color:var(--paper);cursor:pointer;">Dashboard</button></sc-if>
+    <sc-if value="{{ navDashOff }}"><button onClick="{{ goDashboard }}" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Dashboard</button></sc-if>
+  </div>
+
+  <sc-if value="{{ isBooking }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="Booking calendar" style="display:flex;min-height:100vh;">
+    <div style="flex:0 0 320px;padding:48px 40px;border-right:1px solid var(--ink-15);">
+      <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">{{ teacherEyebrow }}</div>
+      <div style="font-family:var(--font-display);font-style:italic;font-size:48px;margin-top:8px;line-height:1.1;">{{ teacherName }}</div>
+      <div style="font-size:20px;color:var(--ink);margin-top:12px;line-height:var(--leading-tight);">{{ teacherTagline }}</div>
+      <div style="font-size:16px;color:var(--ink);margin-top:24px;line-height:var(--leading-body);max-width:280px;">{{ teacherBio }}</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:32px;letter-spacing:.04em;">{{ teacherMeta }}</div>
+    </div>
+
+    <div style="flex:1;padding:48px 40px;min-width:0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div style="display:flex;gap:4px;background:var(--paper-raised);border:1px solid var(--ink-15);border-radius:6px;padding:4px;">
+          <sc-if value="{{ isWeekView }}"><button onClick="{{ setWeekView }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">Week</button></sc-if>
+          <sc-if value="{{ isWeekViewOff }}"><button onClick="{{ setWeekView }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Week</button></sc-if>
+          <sc-if value="{{ isDayView }}"><button onClick="{{ setDayView }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">Day</button></sc-if>
+          <sc-if value="{{ isDayViewOff }}"><button onClick="{{ setDayView }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Day</button></sc-if>
+          <sc-if value="{{ isMonthView }}"><button onClick="{{ setMonthView }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">Month</button></sc-if>
+          <sc-if value="{{ isMonthViewOff }}"><button onClick="{{ setMonthView }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Month</button></sc-if>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <button onClick="{{ goToday }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:6px;border:1px solid var(--ink-15);background:transparent;color:var(--ink);cursor:pointer;">Today</button>
+          <sc-if value="{{ isWeekView }}">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button onClick="{{ prevWeek }}" style="border:1px solid var(--ink-15);background:transparent;border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-family:var(--font-mono);">‹</button>
+              <div style="font-size:13px;letter-spacing:.06em;min-width:150px;text-align:center;">{{ weekLabel }}</div>
+              <button onClick="{{ nextWeek }}" style="border:1px solid var(--ink-15);background:transparent;border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-family:var(--font-mono);">›</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isDayView }}">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button onClick="{{ prevDay }}" style="border:1px solid var(--ink-15);background:transparent;border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-family:var(--font-mono);">‹</button>
+              <div style="font-size:13px;letter-spacing:.06em;min-width:150px;text-align:center;">{{ dayLabel }}</div>
+              <button onClick="{{ nextDay }}" style="border:1px solid var(--ink-15);background:transparent;border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-family:var(--font-mono);">›</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isMonthView }}">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button onClick="{{ prevMonth }}" style="border:1px solid var(--ink-15);background:transparent;border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-family:var(--font-mono);">‹</button>
+              <div style="font-size:13px;letter-spacing:.06em;min-width:150px;text-align:center;">{{ monthLabel }}</div>
+              <button onClick="{{ nextMonth }}" style="border:1px solid var(--ink-15);background:transparent;border-radius:6px;width:32px;height:32px;cursor:pointer;color:var(--ink);font-family:var(--font-mono);">›</button>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:32px;">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:16px;border:1px solid var(--ink-15);border-radius:4px;display:inline-block;box-sizing:border-box;"></span><span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Open</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:16px;background:rgba(225,74,73,.22);border-left:3px solid var(--red);border-radius:4px;display:inline-block;box-sizing:border-box;"></span><span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Booked</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:16px;background:rgba(63,113,222,.22);border-left:3px solid var(--blue);border-radius:4px;display:inline-block;box-sizing:border-box;"></span><span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Requested</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:16px;background:var(--hatch-unavailable);border:1px solid var(--ink-15);border-radius:4px;display:inline-block;box-sizing:border-box;"></span><span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Unavailable</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:24px;height:16px;background:var(--blue-10);border:1px solid var(--ink-15);border-radius:4px;display:inline-block;box-sizing:border-box;"></span><span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Today</span></div>
+      </div>
+
+      <sc-if value="{{ isWeekView }}">
+        <sc-if value="{{ weekNoOpen }}">
+          <div style="margin-top:24px;padding:64px 24px;text-align:center;border:1px dashed var(--ink-15);border-radius:4px;color:var(--muted);font-size:16px;">No open slots this week. Try another week, or check back soon.</div>
+        </sc-if>
+        <sc-if value="{{ weekHasOpen }}">
+          <div style="display:grid;grid-template-columns:56px repeat(7,1fr);gap:0;margin-top:24px;">
+            <div></div>
+            <sc-for list="{{ weekDays }}" as="wd" hint-placeholder-count="7">
+              <sc-if value="{{ wd.isToday }}"><div style="text-align:center;padding-bottom:10px;"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;"><span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--muted);">{{ wd.label }}</span><span style="width:30px;height:30px;border-radius:50%;background:var(--blue);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">{{ wd.dateNum }}</span></span></div></sc-if>
+              <sc-if value="{{ wd.isTodayFalse }}"><div style="text-align:center;padding-bottom:10px;"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;"><span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--muted);">{{ wd.label }}</span><span style="font-size:16px;font-weight:700;color:var(--ink);">{{ wd.dateNum }}</span></span></div></sc-if>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:56px repeat(7,1fr);grid-template-rows:repeat(40,32px);position:relative;border-top:1px solid var(--ink-15);height:1280px;overflow:hidden;align-content:start;">
+            <sc-for list="{{ todayCols }}" as="tc" hint-placeholder-count="7">
+              <sc-if value="{{ tc.isToday }}"><div style="grid-column:{{ tc.col }} / span 1;grid-row:1 / 41;background:var(--blue-10);"></div></sc-if>
+            </sc-for>
+            <sc-for list="{{ hourLabels }}" as="lbl" hint-placeholder-count="20">
+              <div style="grid-column:1;grid-row:{{ lbl.row }} / span 1;position:relative;">
+                <span style="position:absolute;top:0;right:8px;transform:translateY(-50%);background:var(--paper);padding-left:4px;font-size:12px;font-weight:600;color:var(--muted);">{{ lbl.text }}</span>
+              </div>
+            </sc-for>
+            <sc-for list="{{ hourBoxes }}" as="hb" hint-placeholder-count="70">
+              <div style="grid-column:{{ hb.col }} / span 1;grid-row:{{ hb.rowStart }} / {{ hb.rowEnd }};box-sizing:border-box;border-right:1px solid var(--ink-15);border-bottom:1px solid var(--ink-15);pointer-events:none;"></div>
+            </sc-for>
+            <sc-for list="{{ dayColumns }}" as="dc2" hint-placeholder-count="7">
+              <div onMouseMove="{{ dc2.onMove }}" onMouseLeave="{{ dc2.onLeave }}" onClick="{{ dc2.onClick }}" style="grid-column:{{ dc2.col }} / span 1;grid-row:1 / 41;position:relative;cursor:{{ dc2.cursor }};">
+                <sc-if value="{{ dc2.hasGhost }}">
+                  <div style="position:absolute;left:4px;right:4px;top:{{ dc2.ghostTop }}px;height:{{ dc2.ghostHeight }}px;background:var(--blue-10);border:1.5px dashed var(--blue);border-radius:4px;box-sizing:border-box;padding:4px 6px;pointer-events:none;">
+                    <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--blue);">{{ dc2.ghostLabel }}</span>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+            <sc-for list="{{ eventBlocks }}" as="b" hint-placeholder-count="20">
+              <sc-if value="{{ b.isBooked }}"><div style="grid-column:{{ b.col }} / span 1;grid-row:{{ b.rowStart }} / {{ b.rowEnd }};margin:1px 4px;border-radius:4px;background:rgba(225,74,73,.22);border-left:3px solid var(--red);color:var(--ink);box-sizing:border-box;padding:2px 4px 2px 6px;font-size:11px;font-weight:600;line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{ b.label }}</div></sc-if>
+              <sc-if value="{{ b.isRequested }}"><div style="grid-column:{{ b.col }} / span 1;grid-row:{{ b.rowStart }} / {{ b.rowEnd }};margin:1px 4px;border-radius:4px;background:rgba(63,113,222,.22);border-left:3px solid var(--blue);color:var(--ink);box-sizing:border-box;padding:2px 4px 2px 6px;font-size:11px;font-weight:600;line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{ b.label }}</div></sc-if>
+              <sc-if value="{{ b.isUnavailable }}"><div style="grid-column:{{ b.col }} / span 1;grid-row:{{ b.rowStart }} / {{ b.rowEnd }};margin:1px 4px;border-radius:4px;background:var(--hatch-unavailable);border:1px solid var(--ink-15);box-sizing:border-box;"></div></sc-if>
+            </sc-for>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isDayView }}">
+        <sc-if value="{{ dayNoOpen }}">
+          <div style="margin-top:24px;padding:64px 24px;text-align:center;border:1px dashed var(--ink-15);border-radius:4px;color:var(--muted);font-size:16px;">No open slots on this day. Try another day, or check back soon.</div>
+        </sc-if>
+        <sc-if value="{{ dayHasOpen }}">
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:24px;max-width:480px;">
+            <sc-for list="{{ dayAgenda }}" as="cell" hint-placeholder-count="20">
+              <div style="display:flex;align-items:stretch;gap:12px;">
+                <div style="width:56px;flex:none;display:flex;align-items:center;font-size:13px;color:var(--muted);">{{ cell.time }}</div>
+                <sc-if value="{{ cell.isOpen }}"><div onClick="{{ cell.onClick }}" style="flex:1;border:1px solid var(--ink-15);min-height:36px;cursor:pointer;background:transparent;" style-hover="background:var(--ink-08);"></div></sc-if>
+                <sc-if value="{{ cell.isBooked }}"><div style="flex:1;border:1px solid var(--ink-15);border-left:3px solid var(--muted);min-height:36px;background:var(--ink-08);"></div></sc-if>
+                <sc-if value="{{ cell.isRequested }}"><div style="flex:1;border:1px solid var(--ink);border-left:3px solid var(--ink);min-height:36px;background:var(--ink-08);"></div></sc-if>
+                <sc-if value="{{ cell.isUnavailable }}"><div style="flex:1;border:1px solid var(--ink-15);min-height:36px;background:var(--hatch-unavailable);"></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isMonthView }}">
+        <div style="margin-top:24px;max-width:640px;">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;">
+            <sc-for list="{{ weekDays }}" as="wd" hint-placeholder-count="7"><div style="text-align:center;font-size:13px;color:var(--muted);letter-spacing:.06em;">{{ wd.label }}</div></sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+            <sc-for list="{{ monthCells }}" as="mc" hint-placeholder-count="42">
+              <div onClick="{{ mc.onClick }}" style="border:1px solid var(--ink-15);border-radius:4px;min-height:60px;padding:6px;cursor:pointer;display:flex;flex-direction:column;gap:8px;" style-hover="background:var(--ink-08);">
+                <sc-if value="{{ mc.isToday }}"><div style="font-size:13px;color:var(--blue);">{{ mc.dateNum }}</div></sc-if>
+                <sc-if value="{{ mc.isTodayFalse }}"><div style="font-size:13px;color:var(--ink);">{{ mc.dateNum }}</div></sc-if>
+                <div style="display:flex;gap:3px;">
+                  <sc-if value="{{ mc.hasOpen }}"><span style="width:6px;height:6px;border-radius:50%;border:1px solid var(--ink-40);display:inline-block;"></span></sc-if>
+                  <sc-if value="{{ mc.hasBooked }}"><span style="width:6px;height:6px;border-radius:50%;background:var(--muted);display:inline-block;"></span></sc-if>
+                  <sc-if value="{{ mc.hasUnavail }}"><span style="width:6px;height:6px;border-radius:50%;background:var(--ink-40);display:inline-block;"></span></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isLogin }}">
+  <div data-screen-label="Admin login" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px;">
+    <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Card" hint-size="360px,auto" style="width:360px;">
+      <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Teacher Login</div>
+      <div style="font-family:var(--font-display);font-style:italic;font-size:32px;margin-bottom:24px;">Flavia Buzzi</div>
+      <form onSubmit="{{ doLogin }}" style="display:flex;flex-direction:column;gap:16px;">
+        <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Input" label="Email" placeholder="flavia@example.com" hint-size="auto,64px"></x-import>
+        <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Input" label="Password" type="password" placeholder="••••••••" hint-size="auto,64px"></x-import>
+        <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="primary" tone="blue" type="submit" style="margin-top:8px;justify-content:center;" hint-size="auto,44px">Log in</x-import>
+      </form>
+    </x-import>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isDashboard }}">
+  <div data-screen-label="Admin dashboard" style="min-height:100vh;padding:48px 56px;">
+    <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Teacher Dashboard</div>
+    <div style="font-family:var(--font-display);font-style:italic;font-size:48px;margin-top:4px;">Booking Requests</div>
+
+    <div style="display:flex;gap:4px;margin-top:32px;background:var(--paper-raised);border:1px solid var(--ink-15);border-radius:6px;padding:4px;width:fit-content;">
+      <sc-if value="{{ tabIsAll }}"><button onClick="{{ setTabAll }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">All {{ countAll }}</button></sc-if>
+      <sc-if value="{{ tabIsAllOff }}"><button onClick="{{ setTabAll }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">All {{ countAll }}</button></sc-if>
+      <sc-if value="{{ tabIsPending }}"><button onClick="{{ setTabPending }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">Pending {{ countPending }}</button></sc-if>
+      <sc-if value="{{ tabIsPendingOff }}"><button onClick="{{ setTabPending }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Pending {{ countPending }}</button></sc-if>
+      <sc-if value="{{ tabIsConfirmed }}"><button onClick="{{ setTabConfirmed }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">Confirmed {{ countConfirmed }}</button></sc-if>
+      <sc-if value="{{ tabIsConfirmedOff }}"><button onClick="{{ setTabConfirmed }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Confirmed {{ countConfirmed }}</button></sc-if>
+      <sc-if value="{{ tabIsDeclined }}"><button onClick="{{ setTabDeclined }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">Declined {{ countDeclined }}</button></sc-if>
+      <sc-if value="{{ tabIsDeclinedOff }}"><button onClick="{{ setTabDeclined }}" style="font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:4px;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;">Declined {{ countDeclined }}</button></sc-if>
+    </div>
+
+    <sc-if value="{{ dashboardEmpty }}">
+      <div style="margin-top:32px;max-width:640px;padding:64px 24px;text-align:center;border:1px dashed var(--ink-15);border-radius:4px;color:var(--muted);font-size:16px;">{{ emptyMessage }}</div>
+    </sc-if>
+
+    <div style="margin-top:32px;display:flex;flex-direction:column;gap:16px;max-width:640px;">
+      <sc-for list="{{ dashboardRequests }}" as="r" hint-placeholder-count="4">
+        <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Card" hint-size="100%,100px">
+          <div style="display:flex;justify-content:space-between;gap:16px;">
+            <div style="min-width:0;">
+              <div style="font-size:20px;">{{ r.name }}</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.04em;">{{ r.day }} · {{ r.time }}</div>
+              <sc-if value="{{ r.hasMessage }}"><div style="font-size:16px;color:var(--ink);margin-top:12px;line-height:var(--leading-body);max-width:420px;">{{ r.message }}</div></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex:none;">
+              <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.StatusTag" status="{{ r.status }}" hint-size="auto,28px"></x-import>
+              <sc-if value="{{ r.isPending }}">
+                <div style="display:flex;gap:8px;">
+                  <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="primary" tone="green" size="sm" onClick="{{ r.onAccept }}" hint-size="auto,36px">Accept</x-import>
+                  <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="secondary" tone="red" size="sm" onClick="{{ r.onDecline }}" hint-size="auto,36px">Decline</x-import>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </x-import>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ modalOpen }}">
+    <div style="position:fixed;inset:0;background:rgba(38,36,31,.5);display:flex;align-items:center;justify-content:center;z-index:100;padding:24px;">
+      <div style="background:var(--paper-raised);border:1px solid var(--ink);border-radius:var(--radius-card);padding:32px;width:520px;max-width:100%;position:relative;max-height:90vh;overflow:auto;">
+        <button onClick="{{ closeModal }}" style="position:absolute;top:16px;right:16px;border:none;background:transparent;color:var(--muted);font-size:20px;cursor:pointer;font-family:var(--font-mono);">×</button>
+
+        <sc-if value="{{ modalSubmittedFalse }}">
+          <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Request a Lesson</div>
+          <div style="font-size:20px;margin-top:8px;">{{ modalDayLabel }} — {{ modalStartLabel }} – {{ modalEndLabel }}</div>
+
+          <div style="display:flex;gap:24px;margin-top:24px;flex-wrap:wrap;">
+            <label style="display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Start</span>
+              <select value="{{ modalStart }}" onChange="{{ setModalStart }}" style="font-family:var(--font-mono);font-size:16px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--ink-15);background:var(--paper);color:var(--ink);outline:none;min-width:120px;">
+                <sc-for list="{{ modalStartOptions }}" as="opt" hint-placeholder-count="6">
+                  <option value="{{ opt.value }}">{{ opt.label }}</option>
+                </sc-for>
+              </select>
+            </label>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Duration (min)</span>
+              <div style="display:flex;gap:4px;">
+                <sc-for list="{{ durations }}" as="d" hint-placeholder-count="4">
+                  <sc-if value="{{ d.disabled }}"><button disabled style="font-family:var(--font-mono);font-size:13px;padding:10px 14px;border-radius:6px;border:1px solid var(--ink-40);background:transparent;color:var(--ink-40);cursor:not-allowed;">{{ d.label }}</button></sc-if>
+                  <sc-if value="{{ d.enabledActive }}"><button onClick="{{ d.onClick }}" style="font-family:var(--font-mono);font-size:13px;padding:10px 14px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;">{{ d.label }}</button></sc-if>
+                  <sc-if value="{{ d.enabledInactive }}"><button onClick="{{ d.onClick }}" style="font-family:var(--font-mono);font-size:13px;padding:10px 14px;border-radius:6px;border:1px solid var(--ink-15);background:transparent;color:var(--ink);cursor:pointer;" style-hover="background:var(--ink-08);">{{ d.label }}</button></sc-if>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Input" label="Student Name" placeholder="Your name" value="{{ modalName }}" onChange="{{ setModalName }}" hint-size="220px,64px"></x-import>
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Input" label="Student Email" placeholder="you@example.com" value="{{ modalEmail }}" onChange="{{ setModalEmail }}" hint-size="220px,64px"></x-import>
+          </div>
+
+          <label style="display:flex;flex-direction:column;gap:6px;margin-top:16px;">
+            <span style="font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);">Message — optional</span>
+            <textarea value="{{ modalMessage }}" onChange="{{ setModalMessage }}" placeholder="Anything you'd like Flavia to know" style="font-family:var(--font-mono);font-size:16px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--ink-15);background:var(--paper);color:var(--ink);outline:none;min-height:80px;resize:vertical;"></textarea>
+          </label>
+
+          <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="primary" tone="blue" disabled="{{ cannotSubmit }}" onClick="{{ submitModal }}" style="margin-top:48px;justify-content:center;width:100%;" hint-size="auto,44px">Submit request</x-import>
+        </sc-if>
+
+        <sc-if value="{{ modalSubmitted }}">
+          <div style="padding:32px 0;text-align:center;">
+            <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Request Sent</div>
+            <div style="font-size:20px;margin-top:16px;">Sent — you'll hear back within a day.</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:8px;">{{ modalDayLabel }} — {{ modalStartLabel }} – {{ modalEndLabel }}</div>
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="secondary" tone="ink" onClick="{{ closeModal }}" style="margin-top:24px;" hint-size="auto,40px">Done</x-import>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  today = new Date(2026, 7, 10);
+  dayNamesShort = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+  dayNamesFull = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  monthNamesShort = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+  state = {
+    screen: 'booking',
+    view: 'week',
+    weekOffset: 0,
+    monthOffset: 0,
+    dayDate: new Date(2026, 7, 10),
+    modal: null,
+    hoverGhost: null,
+    dashboardTab: 'all',
+    overrides: { [this.seedKey()]: 'requested' },
+    requests: [
+      { id: 1, name: 'Marco Rossi', day: 'THU · 19 AUG', time: '13:30–14:00', message: 'Would like to focus on past tense conjugation if possible.', status: 'pending' },
+      { id: 2, name: 'Elena Conti', day: 'WED · 18 AUG', time: '09:00–09:45', message: 'Looking forward to it!', status: 'confirmed' },
+      { id: 3, name: 'Julien Foret', day: 'FRI · 20 AUG', time: '16:00–17:00', message: '', status: 'pending' },
+      { id: 4, name: 'Sara Kim', day: 'TUE · 17 AUG', time: '11:00–11:30', message: 'Can we do 30 min instead of 60?', status: 'declined' },
+      { id: 5, name: 'Anya Petrova', day: 'MON · 16 AUG', time: '10:00–10:45', message: "First lesson — a bit nervous, first time learning Italian!", status: 'pending' }
+    ]
+  };
+
+  mondayOf(d) { const nd = new Date(d); const day = nd.getDay(); const diff = day === 0 ? -6 : 1 - day; nd.setDate(nd.getDate() + diff); nd.setHours(0,0,0,0); return nd; }
+  addDays(d, n) { const nd = new Date(d); nd.setDate(nd.getDate() + n); return nd; }
+  sameDate(a, b) { return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+  fmtTime(mins) { const h = Math.floor(mins/60)%24; const m = mins%60; return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
+  ordinal(n) { const v = n % 100; if (v >= 11 && v <= 13) return n + 'th'; switch (n % 10) { case 1: return n+'st'; case 2: return n+'nd'; case 3: return n+'rd'; default: return n+'th'; } }
+  baseState(dayIdx, timeIdx) { const r = (dayIdx*31 + timeIdx*7) % 23; if (r===0) return 'booked'; if (r===11) return 'unavailable'; return 'open'; }
+  referenceEvents() {
+    return [
+      { day:0, start:0, end:2, state:'booked' },
+      { day:1, start:10, end:11, state:'booked' },
+      { day:1, start:14, end:16, state:'requested' },
+      { day:2, start:6, end:10, state:'unavailable' },
+      { day:3, start:3, end:4, state:'booked' },
+      { day:3, start:12, end:13, state:'requested' },
+      { day:4, start:1, end:3, state:'booked' },
+      { day:5, start:0, end:8, state:'unavailable' },
+      { day:5, start:16, end:17, state:'requested' }
+    ];
+  }
+  effectiveState(date, timeIdx) {
+    const key = date.toDateString()+'_'+timeIdx;
+    const ov = this.state.overrides[key];
+    if (ov) return ov;
+    const refMonday = this.mondayOf(this.today);
+    const dMonday = this.mondayOf(date);
+    if (dMonday.getTime() === refMonday.getTime()) {
+      const dayOffset = Math.round((date - dMonday) / 86400000);
+      const ev = this.referenceEvents().find(e => e.day === dayOffset && timeIdx >= e.start && timeIdx < e.end);
+      return ev ? ev.state : 'open';
+    }
+    const dayIdx = (date.getDay()+6)%7;
+    return this.baseState(dayIdx, timeIdx);
+  }
+  seedKey() { const d = this.addDays(this.mondayOf(this.today), 2); return d.toDateString()+'_6'; }
+  formatWeekLabel(start, end) {
+    const sM = this.monthNamesShort[start.getMonth()], eM = this.monthNamesShort[end.getMonth()];
+    if (start.getMonth() === end.getMonth()) return sM+' '+start.getDate()+'–'+end.getDate()+', '+end.getFullYear();
+    return sM+' '+start.getDate()+' – '+eM+' '+end.getDate()+', '+end.getFullYear();
+  }
+  openModal(date, timeIdx, overrideStartMin) {
+    let ws = timeIdx, we = timeIdx;
+    while (ws > 0 && this.effectiveState(date, ws-1) === 'open') ws--;
+    while (we < 19 && this.effectiveState(date, we+1) === 'open') we++;
+    const windowStartMin = 540 + ws*30, windowEndMin = 540 + (we+1)*30;
+    const startOptions = [];
+    for (let mn = windowStartMin; mn <= windowEndMin - 15; mn += 15) startOptions.push(mn);
+    const start = overrideStartMin != null ? overrideStartMin : 540+timeIdx*30;
+    this.setState({ modal: { date, timeIdx, windowStartMin, windowEndMin, startOptions, start, duration: 30, name: '', email: '', message: '', submitted: false } });
+  }
+  computeSnap(e, date) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    const minuteFromTop = y * 30 / 32 - 30;
+    let snapped = Math.round(minuteFromTop / 15) * 15;
+    let startMin = 540 + snapped;
+    startMin = Math.max(540, Math.min(1080, startMin));
+    const idxStart = Math.floor((startMin - 540) / 30);
+    const idxEndInclusive = Math.floor((startMin + 59 - 540) / 30);
+    let valid = true;
+    for (let i = idxStart; i <= idxEndInclusive; i++) {
+      if (i < 0 || i > 19 || this.effectiveState(date, i) !== 'open') { valid = false; break; }
+    }
+    return { valid, startMin, idxStart };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const vals = {};
+
+    vals.screen = s.screen;
+    vals.isBooking = s.screen === 'booking';
+    vals.isLogin = s.screen === 'login';
+    vals.isDashboard = s.screen === 'dashboard';
+    vals.goBooking = () => this.setState({ screen: 'booking' });
+    vals.goLogin = () => this.setState({ screen: 'login' });
+    vals.goDashboard = () => this.setState({ screen: 'dashboard' });
+    vals.navBookingOn = s.screen === 'booking'; vals.navBookingOff = s.screen !== 'booking';
+    vals.navLoginOn = s.screen === 'login'; vals.navLoginOff = s.screen !== 'login';
+    vals.navDashOn = s.screen === 'dashboard'; vals.navDashOff = s.screen !== 'dashboard';
+
+    vals.teacherEyebrow = 'ITALIAN LESSONS ONLINE';
+    vals.teacherName = 'Flavia Buzzi';
+    vals.teacherTagline = 'Conversational Italian for adult learners.';
+    vals.teacherBio = "I teach 1:1 conversation lessons over video call, mostly evenings CET. If you don't see a time that works, message me — I sometimes have last-minute openings.";
+    vals.teacherMeta = 'LESSONS 30–90 MIN · TIMEZONE CET';
+
+    vals.isWeekView = s.view === 'week'; vals.isWeekViewOff = s.view !== 'week';
+    vals.isDayView = s.view === 'day'; vals.isDayViewOff = s.view !== 'day';
+    vals.isMonthView = s.view === 'month'; vals.isMonthViewOff = s.view !== 'month';
+    vals.setWeekView = () => this.setState({ view: 'week' });
+    vals.setDayView = () => this.setState({ view: 'day' });
+    vals.setMonthView = () => this.setState({ view: 'month' });
+    vals.goToday = () => this.setState({ weekOffset: 0, monthOffset: 0, dayDate: new Date(this.today) });
+
+    const weekStart = this.addDays(this.mondayOf(this.today), 7*s.weekOffset);
+    const weekEnd = this.addDays(weekStart, 6);
+    vals.weekLabel = this.formatWeekLabel(weekStart, weekEnd);
+    vals.prevWeek = () => this.setState({ weekOffset: s.weekOffset - 1 });
+    vals.nextWeek = () => this.setState({ weekOffset: s.weekOffset + 1 });
+
+    const weekDays = [];
+    for (let i=0;i<7;i++) { const d=this.addDays(weekStart,i); const isToday=this.sameDate(d,this.today); weekDays.push({ key:'wd'+i, label:this.dayNamesShort[i], dateNum:d.getDate(), isToday, isTodayFalse: !isToday }); }
+    vals.weekDays = weekDays;
+
+    const forceEmpty = s.weekOffset === 2;
+    let weekHasOpen = false;
+    const todayCols = [], hourLabels = [], hourBoxes = [], dayColumns = [], eventBlocks = [];
+    for (let t=0;t<20;t+=2) {
+      hourLabels.push({ key:'lbl'+t, row:t+1, text:this.fmtTime(540+t*30) });
+    }
+    for (let d=0;d<7;d++) {
+      const date = this.addDays(weekStart, d);
+      const col = d + 2;
+      const isToday = this.sameDate(date, this.today);
+      todayCols.push({ key:'tc'+d, col, isToday });
+      for (let h=0;h<10;h++) {
+        const t0 = h*2;
+        hourBoxes.push({ key:'hb'+d+'_'+h, col, rowStart:t0+1, rowEnd:t0+3 });
+      }
+      const hg = s.hoverGhost;
+      const isHoverDay = hg && this.sameDate(hg.date, date);
+      const dayCol = { key:'dc'+d, col, cursor: (isHoverDay && hg.valid) ? 'pointer' : 'default',
+        hasGhost: !!(isHoverDay && hg.valid),
+        ghostTop: isHoverDay ? (hg.startMin-540)*32/30 : 0,
+        ghostHeight: 64,
+        ghostLabel: isHoverDay ? this.fmtTime(hg.startMin) : '',
+        onMove: (e) => { const r = this.computeSnap(e, date); this.setState({ hoverGhost: { date, valid: r.valid, startMin: r.startMin, idxStart: r.idxStart } }); },
+        onLeave: () => this.setState({ hoverGhost: null }),
+        onClick: (e) => { const r = this.computeSnap(e, date); if (r.valid) this.openModal(date, r.idxStart, r.startMin); }
+      };
+      dayColumns.push(dayCol);
+      let runStart = null, runState = null;
+      for (let t=0;t<=20;t++) {
+        const st = t < 20 ? (forceEmpty ? 'unavailable' : this.effectiveState(date, t)) : null;
+        if (t < 20 && st === 'open') weekHasOpen = true;
+        if (st !== runState) {
+          if (runState && runState !== 'open') {
+            const rowStart = runStart+1, rowEnd = t+1;
+            const label = (rowEnd-rowStart) >= 2 ? this.fmtTime(540+runStart*30) : '';
+            eventBlocks.push({ key:'b'+d+'_'+runStart, col, rowStart, rowEnd, label, isBooked: runState==='booked', isRequested: runState==='requested', isUnavailable: runState==='unavailable' });
+          }
+          runStart = t; runState = st;
+        }
+      }
+    }
+    vals.todayCols = todayCols;
+    vals.hourLabels = hourLabels;
+    vals.hourBoxes = hourBoxes;
+    vals.dayColumns = dayColumns;
+    vals.eventBlocks = eventBlocks;
+    vals.weekHasOpen = weekHasOpen;
+    vals.weekNoOpen = !weekHasOpen;
+
+    const dd = s.dayDate;
+    vals.dayLabel = this.dayNamesFull[(dd.getDay()+6)%7] + ' ' + this.ordinal(dd.getDate()) + ' ' + this.monthNamesShort[dd.getMonth()];
+    vals.prevDay = () => this.setState({ dayDate: this.addDays(s.dayDate, -1) });
+    vals.nextDay = () => this.setState({ dayDate: this.addDays(s.dayDate, 1) });
+    const dayAgenda = []; let dayHasOpen = false;
+    for (let t=0;t<20;t++) {
+      const st = this.effectiveState(dd, t);
+      if (st === 'open') dayHasOpen = true;
+      dayAgenda.push({ key:'da'+t, isOpen:st==='open', isBooked:st==='booked', isRequested:st==='requested', isUnavailable:st==='unavailable', time:this.fmtTime(540+t*30), onClick: st==='open' ? (() => this.openModal(dd, t)) : null });
+    }
+    vals.dayAgenda = dayAgenda;
+    vals.dayHasOpen = dayHasOpen;
+    vals.dayNoOpen = !dayHasOpen;
+
+    const monthDate = new Date(this.today.getFullYear(), this.today.getMonth()+s.monthOffset, 1);
+    vals.monthLabel = this.monthNames[monthDate.getMonth()] + ' ' + monthDate.getFullYear();
+    vals.prevMonth = () => this.setState({ monthOffset: s.monthOffset - 1 });
+    vals.nextMonth = () => this.setState({ monthOffset: s.monthOffset + 1 });
+    const gridStart = this.mondayOf(monthDate);
+    const monthCells = [];
+    for (let i=0;i<42;i++) {
+      const d = this.addDays(gridStart, i);
+      const isToday = this.sameDate(d, this.today);
+      let hasOpen=false, hasBooked=false, hasUnavail=false;
+      for (let t=0;t<20;t++) { const st=this.effectiveState(d,t); if (st==='open') hasOpen=true; else if (st==='unavailable') hasUnavail=true; else hasBooked=true; }
+      monthCells.push({ key:'m'+i, dateNum:d.getDate(), isToday, isTodayFalse: !isToday, hasOpen, hasBooked, hasUnavail, onClick: () => this.setState({ view:'day', dayDate:d }) });
+    }
+    vals.monthCells = monthCells;
+
+    vals.modalOpen = !!s.modal;
+    if (s.modal) {
+      const m = s.modal;
+      vals.modalSubmitted = !!m.submitted;
+      vals.modalSubmittedFalse = !m.submitted;
+      vals.modalDayLabel = this.dayNamesFull[(m.date.getDay()+6)%7] + ' ' + this.ordinal(m.date.getDate()) + ' ' + this.monthNamesShort[m.date.getMonth()] + ' ' + m.date.getFullYear();
+      vals.modalStartLabel = this.fmtTime(m.start);
+      vals.modalEndLabel = this.fmtTime(m.start + m.duration);
+      vals.modalStart = m.start;
+      vals.modalStartOptions = m.startOptions.map(min => ({ value: min, label: this.fmtTime(min) }));
+      vals.setModalStart = (e) => this.setState({ modal: { ...this.state.modal, start: Number(e.target.value) } });
+      vals.durations = [30,45,60,90].map(dur => {
+        const disabled = (m.start + dur) > m.windowEndMin;
+        const active = dur === m.duration;
+        return { value: dur, label: String(dur), disabled, enabledActive: !disabled && active, enabledInactive: !disabled && !active, onClick: disabled ? null : (() => this.setState({ modal: { ...this.state.modal, duration: dur } })) };
+      });
+      vals.modalName = m.name; vals.modalEmail = m.email; vals.modalMessage = m.message;
+      vals.setModalName = (e) => this.setState({ modal: { ...this.state.modal, name: e.target.value } });
+      vals.setModalEmail = (e) => this.setState({ modal: { ...this.state.modal, email: e.target.value } });
+      vals.setModalMessage = (e) => this.setState({ modal: { ...this.state.modal, message: e.target.value } });
+      const canSubmit = m.name.trim() !== '' && m.email.trim() !== '';
+      vals.cannotSubmit = !canSubmit;
+      vals.submitModal = () => { if (m.name.trim()==='' || m.email.trim()==='') return; this.setState({ modal: { ...this.state.modal, submitted: true } }); };
+      vals.closeModal = () => {
+        if (m.submitted) {
+          const key = m.date.toDateString()+'_'+m.timeIdx;
+          this.setState({ overrides: { ...this.state.overrides, [key]: 'requested' }, modal: null });
+        } else {
+          this.setState({ modal: null });
+        }
+      };
+    }
+
+    vals.dashboardTab = s.dashboardTab;
+    vals.setTabAll = () => this.setState({ dashboardTab: 'all' });
+    vals.setTabPending = () => this.setState({ dashboardTab: 'pending' });
+    vals.setTabConfirmed = () => this.setState({ dashboardTab: 'confirmed' });
+    vals.setTabDeclined = () => this.setState({ dashboardTab: 'declined' });
+    vals.tabIsAll = s.dashboardTab==='all'; vals.tabIsAllOff = s.dashboardTab!=='all';
+    vals.tabIsPending = s.dashboardTab==='pending'; vals.tabIsPendingOff = s.dashboardTab!=='pending';
+    vals.tabIsConfirmed = s.dashboardTab==='confirmed'; vals.tabIsConfirmedOff = s.dashboardTab!=='confirmed';
+    vals.tabIsDeclined = s.dashboardTab==='declined'; vals.tabIsDeclinedOff = s.dashboardTab!=='declined';
+    const counts = { pending:0, confirmed:0, declined:0 };
+    s.requests.forEach(r => counts[r.status]++);
+    vals.countAll = s.requests.length; vals.countPending = counts.pending; vals.countConfirmed = counts.confirmed; vals.countDeclined = counts.declined;
+    const filtered = s.requests.filter(r => s.dashboardTab==='all' || r.status===s.dashboardTab);
+    vals.dashboardRequests = filtered.map(r => ({
+      ...r, isPending: r.status==='pending', hasMessage: r.message.trim()!=='',
+      onAccept: () => this.setState({ requests: this.state.requests.map(x => x.id===r.id ? {...x,status:'confirmed'} : x) }),
+      onDecline: () => this.setState({ requests: this.state.requests.map(x => x.id===r.id ? {...x,status:'declined'} : x) })
+    }));
+    vals.dashboardEmpty = filtered.length === 0;
+    const tabWord = { all:'', pending:'pending ', confirmed:'confirmed ', declined:'declined ' }[s.dashboardTab];
+    vals.emptyMessage = 'No ' + tabWord + 'requests yet.';
+
+    vals.doLogin = (e) => { e.preventDefault(); this.setState({ screen: 'dashboard' }); };
+
+    return vals;
+  }
+}
+
+</script>
+</body>
+</html>
