@@ -40,19 +40,18 @@
     .bk-scroll::-webkit-scrollbar-thumb { background: var(--color-border); }
     .bk-in:focus { border-color: var(--color-ink) !important; outline: none; }
     @keyframes bkpop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) { .page-nav { position: static !important; width: max-content; margin: 12px 12px 0 auto; } }
   </style>
 </helmet>
 <div style="min-height:100vh;background:var(--color-bg)">
-  <div style="display:flex;justify-content:center;padding:24px 32px 0">
-    <div style="display:inline-flex;border:1px solid var(--color-ink)">
-      <button onClick="{{ goHome }}" style="{{ navHomeStyle }}">Home</button>
-      <button onClick="{{ goBooking }}" style="{{ navStudentStyle }}">Student</button>
-      <button onClick="{{ goLogin }}" style="{{ navLoginStyle }}">Teacher Login</button>
-      <button onClick="{{ goDashboard }}" style="{{ navDashStyle }}">Dashboard</button>
-    </div>
+  <div class="page-nav" style="position:fixed;top:16px;right:16px;z-index:80;display:inline-flex;border:1px solid var(--color-ink);background:var(--color-bg)">
+    <button onClick="{{ goHome }}" style="{{ navHomeStyle }}">Home</button>
+    <button onClick="{{ goBooking }}" style="{{ navStudentStyle }}">Student</button>
+    <button onClick="{{ goLogin }}" style="{{ navLoginStyle }}">Teacher Login</button>
+    <button onClick="{{ goDashboard }}" style="{{ navDashStyle }}">Dashboard</button>
   </div>
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-    <iframe src="Homepage.html" title="Home" style="display:block;width:100%;height:calc(100vh - 80px);border:none;margin-top:24px"></iframe>
+    <iframe src="Homepage.html" title="Home" style="display:block;width:100%;height:100vh;border:none"></iframe>
   </sc-if>
   <sc-if value="{{ isBooking }}" hint-placeholder-val="{{ false }}">
   <div style="max-width:1200px;margin:0 auto;padding:44px 32px 72px;font-family:var(--font-sans)">
@@ -418,7 +417,7 @@ class Component extends DCLogic {
     const h = React.createElement;
     const lf = this.state.loginForm;
     const valid = lf.username.trim().length > 0 && lf.password.length > 0;
-    return h('div', { style: { minHeight:'calc(100vh - 80px)', display:'flex', alignItems:'center', justifyContent:'center', padding:'24px' } },
+    return h('div', { style: { minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', padding:'24px' } },
       h('form', { onSubmit:this.submitLogin, style: { width:'360px', maxWidth:'100%', background:'var(--color-bg)', border:'1px solid var(--color-ink)', padding:'28px 26px 24px' } },
         h('div', { style: { fontFamily:'var(--font-sans)', fontWeight:600, fontSize:'12px', letterSpacing:'1.2px', textTransform:'uppercase', color:'var(--color-blue)', marginBottom:'10px' } }, 'Teacher Login'),
         h('h1', { style: { fontFamily:'var(--font-sans)', fontWeight:700, fontSize:'24px', letterSpacing:'-0.5px', color:'var(--color-ink)', margin:'0 0 22px' } }, 'Admin Dashboard'),
@@ -605,11 +604,11 @@ class Component extends DCLogic {
       goBooking: this.goBooking,
       goHome: () => this.setState({ page: 'home' }),
       isHome: this.state.page === 'home',
-      navHomeStyle: seg(this.state.page === 'home'),
+      navHomeStyle: Object.assign(seg(this.state.page === 'home'), { padding: '8px 12px', fontSize: '11px' }),
       goDashboard: () => this.setState({ page: 'dashboard' }),
-      navStudentStyle: seg(this.state.page === 'booking'),
-      navLoginStyle: seg(this.state.page === 'login'),
-      navDashStyle: seg(this.state.page === 'dashboard'),
+      navStudentStyle: Object.assign(seg(this.state.page === 'booking'), { padding: '8px 12px', fontSize: '11px' }),
+      navLoginStyle: Object.assign(seg(this.state.page === 'login'), { padding: '8px 12px', fontSize: '11px' }),
+      navDashStyle: Object.assign(seg(this.state.page === 'dashboard'), { padding: '8px 12px', fontSize: '11px' }),
       loginPage: this.state.page === 'login' ? this.renderLoginPage() : null,
       dashboardPage: this.state.page === 'dashboard' ? this.renderDashboardPage() : null,
       goToday: () => this.setState({ anchor: this.todayMid() }),
