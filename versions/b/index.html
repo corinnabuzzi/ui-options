@@ -101,20 +101,21 @@
               <sc-if value="{{ wd.isTodayFalse }}"><div style="text-align:center;padding-bottom:10px;"><span style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;"><span style="font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--muted);">{{ wd.label }}</span><span style="font-size:16px;font-weight:700;color:var(--ink);">{{ wd.dateNum }}</span></span></div></sc-if>
             </sc-for>
           </div>
-          <div style="display:grid;grid-template-columns:56px repeat(7,1fr);grid-template-rows:repeat(40,32px);position:relative;border-top:1px solid var(--ink-15);height:1280px;overflow:hidden;align-content:start;">
+          <div style="display:grid;grid-template-columns:56px repeat(7,1fr);grid-template-rows:repeat(20,32px);position:relative;border-top:1px solid var(--ink-15);height:1280px;overflow:hidden;align-content:start;">
             <sc-for list="{{ todayCols }}" as="tc" hint-placeholder-count="7">
-              <sc-if value="{{ tc.isToday }}"><div style="grid-column:{{ tc.col }} / span 1;grid-row:1 / 41;background:var(--blue-10);"></div></sc-if>
+              <sc-if value="{{ tc.isToday }}"><div style="grid-column:{{ tc.col }} / span 1;grid-row:1 / 21;background:var(--blue-10);"></div></sc-if>
             </sc-for>
             <sc-for list="{{ hourLabels }}" as="lbl" hint-placeholder-count="20">
               <div style="grid-column:1;grid-row:{{ lbl.row }} / span 1;position:relative;">
-                <span style="position:absolute;top:0;right:8px;transform:translateY(-50%);background:var(--paper);padding-left:4px;font-size:12px;font-weight:600;color:var(--muted);">{{ lbl.text }}</span>
+                <sc-if value="{{ lbl.isFirst }}"><span style="position:absolute;top:2px;right:8px;padding-left:4px;font-size:12px;font-weight:600;color:var(--muted);">{{ lbl.text }}</span></sc-if>
+                <sc-if value="{{ lbl.isRest }}"><span style="position:absolute;top:0;right:8px;transform:translateY(-50%);background:var(--paper);padding-left:4px;font-size:12px;font-weight:600;color:var(--muted);">{{ lbl.text }}</span></sc-if>
               </div>
             </sc-for>
             <sc-for list="{{ hourBoxes }}" as="hb" hint-placeholder-count="70">
               <div style="grid-column:{{ hb.col }} / span 1;grid-row:{{ hb.rowStart }} / {{ hb.rowEnd }};box-sizing:border-box;border-right:1px solid var(--ink-15);border-bottom:1px solid var(--ink-15);pointer-events:none;"></div>
             </sc-for>
             <sc-for list="{{ dayColumns }}" as="dc2" hint-placeholder-count="7">
-              <div onMouseMove="{{ dc2.onMove }}" onMouseLeave="{{ dc2.onLeave }}" onClick="{{ dc2.onClick }}" style="grid-column:{{ dc2.col }} / span 1;grid-row:1 / 41;position:relative;cursor:{{ dc2.cursor }};">
+              <div onMouseMove="{{ dc2.onMove }}" onMouseLeave="{{ dc2.onLeave }}" onClick="{{ dc2.onClick }}" style="grid-column:{{ dc2.col }} / span 1;grid-row:1 / 21;position:relative;cursor:{{ dc2.cursor }};">
                 <sc-if value="{{ dc2.hasGhost }}">
                   <div style="position:absolute;left:4px;right:4px;top:{{ dc2.ghostTop }}px;height:{{ dc2.ghostHeight }}px;background:var(--blue-10);border:1.5px dashed var(--blue);border-radius:4px;box-sizing:border-box;padding:4px 6px;pointer-events:none;">
                     <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--blue);">{{ dc2.ghostLabel }}</span>
@@ -189,7 +190,7 @@
   </sc-if>
 
   <sc-if value="{{ isDashboard }}">
-  <div data-screen-label="Admin dashboard" style="min-height:100vh;padding:48px 56px;">
+  <div data-screen-label="Admin dashboard" style="min-height:100vh;padding:48px 56px;max-width:640px;margin:0 auto;">
     <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);">Teacher Dashboard</div>
     <div style="font-family:var(--font-display);font-style:italic;font-size:48px;margin-top:4px;">Booking Requests</div>
 
@@ -273,7 +274,9 @@
             <textarea value="{{ modalMessage }}" onChange="{{ setModalMessage }}" placeholder="Anything you'd like Flavia to know" style="font-family:var(--font-mono);font-size:16px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--ink-15);background:var(--paper);color:var(--ink);outline:none;min-height:80px;resize:vertical;"></textarea>
           </label>
 
-          <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="primary" tone="blue" disabled="{{ cannotSubmit }}" onClick="{{ submitModal }}" style="margin-top:48px;justify-content:center;width:100%;" hint-size="auto,44px">Submit request</x-import>
+          <div style="padding-top:16px;display:flex;flex-direction:column;">
+            <x-import component-from-global-scope="FlaviaBuzziPaperPenDesignSystem_2ea0ec.Button" variant="primary" tone="blue" disabled="{{ cannotSubmit }}" onClick="{{ submitModal }}" style="justify-content:center;width:100%;" hint-size="auto,44px">Submit request</x-import>
+          </div>
         </sc-if>
 
         <sc-if value="{{ modalSubmitted }}">
@@ -426,7 +429,7 @@ class Component extends DCLogic {
     let weekHasOpen = false;
     const todayCols = [], hourLabels = [], hourBoxes = [], dayColumns = [], eventBlocks = [];
     for (let t=0;t<20;t+=2) {
-      hourLabels.push({ key:'lbl'+t, row:t+1, text:this.fmtTime(540+t*30) });
+      hourLabels.push({ key:'lbl'+t, row:t+1, isFirst: t===0, isRest: t!==0, text:this.fmtTime(540+t*30) });
     }
     for (let d=0;d<7;d++) {
       const date = this.addDays(weekStart, d);
