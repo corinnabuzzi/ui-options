@@ -19,5 +19,10 @@ window.UI_OPTIONS = {
       src: 'versions/c/index.html',
       description: '',
     },
+    {
+      name: 'Option D',
+      src: 'versions/d/index.html',
+      description: '',
+    },
   ],
 };
